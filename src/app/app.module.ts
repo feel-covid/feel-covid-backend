@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from '../users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '../config/typeorm.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
 	imports: [
@@ -12,6 +13,9 @@ import { typeOrmConfig } from '../config/typeorm.config';
 			autoSchemaFile: 'schema.gql'
 		}),
 		TypeOrmModule.forRoot(typeOrmConfig),
+		ConfigModule.forRoot({
+			isGlobal: true
+		}),
 		UsersModule
 	],
 	controllers: [AppController],
