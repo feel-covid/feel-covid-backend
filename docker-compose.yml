@@ -1,20 +1,33 @@
 version: '3'
 services:
-  devtalk-postgres:
+  postgres:
     image: postgres
     volumes:
-      - ./db:/data/db
+      - ./.docker/postgres:/data/db
     ports:
       - 5432:5432
     networks:
       - app-network
 
-  devtalk-redis:
+  redis:
     image: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
     command:
       redis-server
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: bitnami/rabbitmq:3.8.3
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./.docker/rabbitmq:/bitnami
+    environment:
+      - RABBITMQ_USERNAME=dev
+      - RABBITMQ_PASSWORD=dev
     networks:
       - app-network
 
