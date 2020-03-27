@@ -4,7 +4,6 @@ services:
     image: postgres
     volumes:
       - ./.docker/postgres:/data/db
-      - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
     networks:
@@ -18,20 +17,7 @@ services:
       redis-server
     networks:
       - app-network
-
-  rabbitmq:
-    image: bitnami/rabbitmq:3.8.3
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - ./.docker/rabbitmq:/bitnami
-    environment:
-      - RABBITMQ_USERNAME=dev
-      - RABBITMQ_PASSWORD=dev
-    networks:
-      - app-network
-
+    
 networks:
   app-network:
     driver: bridge
