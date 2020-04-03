@@ -1,37 +1,44 @@
 import fetch from 'node-fetch';
 import * as cheerio from 'cheerio';
+import * as cron from 'node-cron';
 import { scraperConfig } from '../config/scraper.config';
 
-export class ScraperService {
-	async handleCron() {
-		const pageContents = await this.getPageContents();
-		const relevantProperties = this.extractRelevantProperties(pageContents);
-	}
+const init = () => {
+	cron.schedule(scraperConfig.cronSchedule, handleCron);
+};
 
-	async getPageContents(): Promise<string> {
-		return fetch(scraperConfig.dataSourceURL).then(res => res.text());
-	}
+const handleCron = async () => {
+	const pageContents = await getPageContents();
+	const relevantProperties = extractRelevantProperties(pageContents);
+};
 
-	extractRelevantProperties(pageContents: string) {
-		const $ = cheerio.load(pageContents);
+const getPageContents = async (): Promise<string> => {
+	return fetch(scraperConfig.dataSourceURL).then(res => res.text());
+};
 
-		const propertiesMapper = {
-			0: 'activeCases',
-			1: 'deaths',
-			2: 'recovered'
-		};
+const extractRelevantProperties = async (pageContents: string) => {
+	const $ = cheerio.load(pageContents);
 
-		const properties = $('.maincounter-number')
-			.get()
-			.reduce((acc, currentElement, index) => {
-				acc[propertiesMapper[index]] = $(currentElement)
-					.find('span' as any)
-					.text()
-					.trim();
+	const propertiesMapper = {
+		0: 'activeCases',
+		1: 'deaths',
+		2: 'recovered'
+	};
 
-				return acc;
-			}, {});
+	const properties = $('.maincounter-number')
+		.get()
+		.reduce((acc, currentElement, index) => {
+			acc[propertiesMapper[index]] = $(currentElement)
+				.find('span' as any)
+				.text()
+				.trim();
 
-		return properties;
-	}
-}
+			return acc;
+		}, {});
+
+	return properties;
+};
+
+export default {
+	init
+};
