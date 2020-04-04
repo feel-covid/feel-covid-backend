@@ -1,0 +1,7 @@
+import * as Joi from '@hapi/joi';
+
+export const getCountryPayloadValidator = Joi.object({
+	name: Joi.string().required(),
+	startDate: Joi.string().required(),
+	endDate: Joi.string().required()
+});

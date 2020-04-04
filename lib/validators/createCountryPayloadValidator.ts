@@ -1,5 +1,5 @@
 import * as Joi from '@hapi/joi';
 
-export const countryPayloadValidator = Joi.object({
+export const createCountryPayloadValidator = Joi.object({
 	name: Joi.string().required()
 });

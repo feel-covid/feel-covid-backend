@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import statsService from '../services/statsService';
-import { statPayloadValidator } from '../validators/statPayloadValidator';
+import { createStatPayloadValidator } from '../validators/createStatPayloadValidator';
 
 /**
  * @method POST
  */
 const handleAddStats = async (req: Request, res: Response) => {
 	try {
-		await statPayloadValidator.validateAsync(req.body);
+		await createStatPayloadValidator.validateAsync(req.body);
 
 		await statsService.addStats(req.body);
 

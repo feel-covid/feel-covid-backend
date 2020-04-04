@@ -1,10 +1,14 @@
-import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne, BaseEntity, Unique } from 'typeorm';
+import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne, BaseEntity, Unique, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import { Country } from './Country';
 import { ICondition, ITreatment } from '../@types/interfaces';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 @Unique(['date'])
 export class Stat extends BaseEntity {
+	@PrimaryColumn('uuid')
+	id: string;
+
 	@PrimaryColumn()
 	countryId: string;
 
@@ -33,6 +37,11 @@ export class Stat extends BaseEntity {
 	@Column()
 	recovered: number;
 
-	@Column('date')
+	@Column('timestamptz')
 	date: Date;
+
+	@BeforeInsert()
+	addId() {
+		this.id = uuidv4();
+	}
 }

@@ -5,7 +5,7 @@ const conditionSchema = Joi.object({
 	intubated: Joi.number()
 });
 
-export const statPayloadValidator = Joi.object({
+export const createStatPayloadValidator = Joi.object({
 	light: conditionSchema,
 	mid: conditionSchema,
 	severe: conditionSchema,
