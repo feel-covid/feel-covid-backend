@@ -1,10 +1,11 @@
-import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
+import { Column, PrimaryColumn, Entity, OneToMany, BaseEntity, BeforeInsert } from 'typeorm';
 import { Stat } from './Stat';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
-export class Country {
-	@PrimaryGeneratedColumn()
-	id: number;
+export class Country extends BaseEntity {
+	@PrimaryColumn('uuid')
+	id: string;
 
 	@Column()
 	name: string;
@@ -14,4 +15,9 @@ export class Country {
 		stat => stat.country
 	)
 	stats: Stat[];
+
+	@BeforeInsert()
+	addId() {
+		this.id = uuidv4();
+	}
 }

@@ -1,12 +1,20 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import statsService from '../services/statsService';
+import { statPayloadValidator } from '../validators/statPayloadValidator';
 
-const handleGetStats = async (req: Request, res: Response) => {
-	const stats = await statsService.getStats();
+/**
+ * @method POST
+ */
+const handleAddStats = async (req: Request, res: Response) => {
+	try {
+		await statPayloadValidator.validateAsync(req.body);
 
-	res.send(stats);
+		await statsService.addStats(req.body);
+
+		res.send({ success: true });
+	} catch (ex) {}
 };
 
 export default {
-	handleGetStats
+	handleAddStats
 };

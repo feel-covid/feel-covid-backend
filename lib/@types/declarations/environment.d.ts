@@ -11,5 +11,6 @@ declare global {
 		DATABASE_NAME: string;
 		PORT: string;
 		NODE_ENV: string;
+		API_KEY: string;
 	}
 }

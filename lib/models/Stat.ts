@@ -1,36 +1,13 @@
-import { Column, PrimaryGeneratedColumn, Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne, BaseEntity, Unique } from 'typeorm';
 import { Country } from './Country';
-import { Treatment } from './Treatment';
-import { Condition } from './Condition';
+import { ICondition, ITreatment } from '../@types/interfaces';
 
 @Entity()
-export class Stat {
-	@PrimaryGeneratedColumn()
-	id: number;
-
-	@OneToOne(type => Condition)
-	@JoinColumn()
-	lightCondition: Condition;
-
-	@OneToOne(type => Condition)
-	@JoinColumn()
-	midCondition: Condition;
-
-	@OneToOne(type => Condition)
-	@JoinColumn()
-	severeCondition: Condition;
-
-	@Column()
-	deceased: number;
-
-	@Column()
-	recovered: number;
-
-	@Column('date')
-	date: Date;
-
+@Unique(['date'])
+export class Stat extends BaseEntity {
 	@PrimaryColumn()
-	countryId: number;
+	countryId: string;
+
 	@ManyToOne(
 		type => Country,
 		country => country.stats
@@ -38,7 +15,24 @@ export class Stat {
 	@JoinColumn({ name: 'countryId' })
 	country: Country;
 
-	@OneToOne(type => Treatment)
-	@JoinColumn()
-	treatment: Treatment;
+	@Column('jsonb')
+	light: ICondition;
+
+	@Column('jsonb')
+	mid: ICondition;
+
+	@Column('jsonb')
+	severe: ICondition;
+
+	@Column()
+	deceased: number;
+
+	@Column('jsonb')
+	treatment: ITreatment;
+
+	@Column()
+	recovered: number;
+
+	@Column('date')
+	date: Date;
 }
