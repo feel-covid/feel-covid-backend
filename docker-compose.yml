@@ -9,6 +9,18 @@ services:
     networks:
       - app-network
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: qwerty
+    volumes:
+      - ./.docker/pgadmin:/root/.pgadmin
+    ports:
+      - 5433:80
+    networks:
+      - app-network
+
   redis:
     image: redis
     ports:

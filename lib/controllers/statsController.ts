@@ -3,7 +3,8 @@ import statsService from '../services/statsService';
 
 const handleGetStats = async (req: Request, res: Response) => {
 	const stats = await statsService.getStats();
-	return stats;
+
+	res.send(stats);
 };
 
 export default {

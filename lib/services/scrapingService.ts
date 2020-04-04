@@ -3,8 +3,9 @@ import * as cheerio from 'cheerio';
 import * as cron from 'node-cron';
 import { scraperConfig } from '../config/scraper.config';
 
-const init = () => {
+const init = async () => {
 	cron.schedule(scraperConfig.cronSchedule, handleCron);
+	// await handleCron();
 };
 
 const handleCron = async () => {
@@ -13,7 +14,7 @@ const handleCron = async () => {
 };
 
 const getPageContents = async (): Promise<string> => {
-	return fetch(scraperConfig.dataSourceURL).then(res => res.text());
+	return fetch(scraperConfig.dataSourceUrl).then(res => res.text());
 };
 
 const extractRelevantProperties = async (pageContents: string) => {
