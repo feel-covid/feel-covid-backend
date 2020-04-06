@@ -9,7 +9,7 @@ import { StatusCodeEnum } from '../@types/enums';
 const handleAddStats = async (req: Request, res: Response) => {
 	try {
 		try {
-			await createStatPayloadValidator.validateAsync(req.query);
+			await createStatPayloadValidator.validateAsync(req.body);
 		} catch (ex) {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
