@@ -3,11 +3,17 @@ import { Country } from '../models/Country';
 import { getConnection } from 'typeorm';
 import cachingService from './cachingService';
 import { CachingKeysEnum } from '../@types/enums';
+import { startOfDay, endOfDay } from 'date-fns';
 
 const handleGetCountry = async payload => {
-	const { name, startDate, endDate } = payload;
+	// tslint:disable-next-line:prefer-const
+	let { name, startDate, endDate } = payload;
+	startDate = startOfDay(new Date(JSON.parse(startDate)));
+	endDate = endOfDay(new Date(JSON.parse(endDate)));
 
-	let data = await cachingService.get(CachingKeysEnum.COUNTRIES_DATA);
+	const cacheKey = `${CachingKeysEnum.COUNTRIES_DATA}${startDate.toISOString()}${endDate.toISOString()}`;
+
+	let data = await cachingService.get(cacheKey);
 
 	if (!data) {
 		data = await getConnection()
@@ -20,7 +26,7 @@ const handleGetCountry = async payload => {
 			.orderBy('stat.date')
 			.getRawMany();
 
-		await cachingService.set(CachingKeysEnum.COUNTRIES_DATA, data);
+		await cachingService.set(cacheKey, data);
 	}
 
 	return data;
