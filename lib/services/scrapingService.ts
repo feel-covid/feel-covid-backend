@@ -4,7 +4,7 @@ import * as cron from 'node-cron';
 import { scraperConfig } from '../config/scraper.config';
 
 const init = async () => {
-	cron.schedule(scraperConfig.cronSchedule, handleCron);
+	// cron.schedule(scraperConfig.cronSchedule, handleCron);
 	// await handleCron();
 };
 

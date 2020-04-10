@@ -1,19 +1,27 @@
 import { ICountry } from '../@types/interfaces';
 import { Country } from '../models/Country';
 import { getConnection } from 'typeorm';
+import cachingService from './cachingService';
+import { CachingKeysEnum } from '../@types/enums';
 
 const handleGetCountry = async payload => {
 	const { name, startDate, endDate } = payload;
 
-	const data = await getConnection()
-		.getRepository(Country)
-		.createQueryBuilder('country')
-		.select('*')
-		.innerJoin('country.stats', 'stat')
-		.where('country.name ILIKE :name', { name })
-		.andWhere('stat.date BETWEEN SYMMETRIC :startDate and :endDate', { startDate, endDate })
-		.orderBy('stat.date')
-		.getRawMany();
+	let data = await cachingService.get(CachingKeysEnum.COUNTRIES_DATA);
+
+	if (!data) {
+		data = await getConnection()
+			.getRepository(Country)
+			.createQueryBuilder('country')
+			.select('*')
+			.innerJoin('country.stats', 'stat')
+			.where('country.name ILIKE :name', { name })
+			.andWhere('stat.date BETWEEN SYMMETRIC :startDate and :endDate', { startDate, endDate })
+			.orderBy('stat.date')
+			.getRawMany();
+
+		await cachingService.set(CachingKeysEnum.COUNTRIES_DATA, data);
+	}
 
 	return data;
 };

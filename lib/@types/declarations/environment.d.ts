@@ -12,5 +12,6 @@ declare global {
 		PORT: string;
 		NODE_ENV: string;
 		API_KEY: string;
+		REDIS_PORT: string;
 	}
 }

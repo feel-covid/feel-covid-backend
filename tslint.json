@@ -15,7 +15,8 @@
     "object-literal-sort-keys": false,
     "no-require-imports": [false],
     "no-var-requires": false,
-    "no-console": false
+    "no-console": false,
+    "array-type": false
   },
   "rulesDirectory": []
 }
