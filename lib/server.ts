@@ -8,9 +8,6 @@ import './connectors/sentryConnector';
 import { logger } from './services/loggingService';
 
 const initServerComponents = async () => {
-	if (process.env.NODE_ENV === 'production') {
-	}
-
 	await typeormConnector.init();
 };
 
