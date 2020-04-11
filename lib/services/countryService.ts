@@ -8,10 +8,10 @@ import { startOfDay, endOfDay } from 'date-fns';
 const handleGetCountry = async payload => {
 	// tslint:disable-next-line:prefer-const
 	let { name, startDate, endDate } = payload;
-	startDate = startOfDay(new Date(JSON.parse(startDate)));
-	endDate = endOfDay(new Date(JSON.parse(endDate)));
 
-	const cacheKey = `${CachingKeysEnum.COUNTRIES_DATA}${startDate.toISOString()}${endDate.toISOString()}`;
+	const _startOfDay = startOfDay(new Date(JSON.parse(startDate))).toISOString();
+	const _endOfDay = endOfDay(new Date(JSON.parse(endDate))).toISOString();
+	const cacheKey = `${CachingKeysEnum.COUNTRIES_DATA}${_startOfDay}${_endOfDay}`;
 
 	let data = await cachingService.get(cacheKey);
 
@@ -33,15 +33,11 @@ const handleGetCountry = async payload => {
 };
 
 const handleAddCountry = async (payload: ICountry) => {
-	try {
-		const newCountry = Country.create({
-			name: payload.name
-		});
+	const newCountry = Country.create({
+		name: payload.name
+	});
 
-		await newCountry.save();
-	} catch (ex) {
-		throw new Error(ex);
-	}
+	await newCountry.save();
 };
 
 export default {

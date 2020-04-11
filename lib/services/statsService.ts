@@ -3,18 +3,14 @@ import { IStat } from '../@types/interfaces';
 import cachingService from './cachingService';
 
 const addStats = async (payload: IStat) => {
-	try {
-		const { date, ...rest } = payload;
+	const { date, ...rest } = payload;
 
-		const newStat = Stat.create({
-			date: new Date(date * 1000),
-			...rest
-		});
-		await newStat.save();
-		await cachingService.clearAll();
-	} catch (ex) {
-		console.log(ex);
-	}
+	const newStat = Stat.create({
+		date: new Date(date * 1000),
+		...rest
+	});
+	await newStat.save();
+	await cachingService.clearAll();
 };
 
 export default {

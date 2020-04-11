@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import countryService from '../services/countryService';
-import cachingService from '../services/cachingService';
 import { createCountryPayloadValidator } from '../validators/createCountryPayloadValidator';
-import { CachingKeysEnum, StatusCodeEnum } from '../@types/enums';
+import { StatusCodeEnum } from '../@types/enums';
 import { getCountryPayloadValidator } from '../validators/getCountryPayloadValidator';
+import { logger } from '../services/loggingService';
 
 /**
  * @method GET
@@ -19,7 +19,10 @@ const handleGetCountry = async (req: Request, res: Response) => {
 		const data = await countryService.handleGetCountry(req.query);
 
 		res.send(data);
-	} catch (ex) {}
+	} catch (ex) {
+		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
+		logger.error(`${ex.message} %o`, { query: req.query });
+	}
 };
 
 /**
@@ -36,7 +39,10 @@ const handleAddCountry = async (req: Request, res: Response) => {
 		await countryService.handleAddCountry(req.body);
 
 		res.send({ success: true });
-	} catch (ex) {}
+	} catch (ex) {
+		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
+		logger.error(`${ex.message} %o`, { body: req.body });
+	}
 };
 
 export default {

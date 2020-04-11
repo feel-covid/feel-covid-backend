@@ -4,22 +4,27 @@ import { setupRouter } from './routes';
 import { setupMiddlewares } from './middlewares';
 import * as express from 'express';
 import './connectors/redisConnector';
+import './connectors/sentryConnector';
+import { logger } from './services/loggingService';
 
 const initServerComponents = async () => {
+	if (process.env.NODE_ENV === 'production') {
+	}
+
 	await typeormConnector.init();
 };
 
 const main = async () => {
-	const app: express.Application = express();
-
-	setupMiddlewares(app);
-	setupRouter(app);
-
 	await initServerComponents();
+
+	const app: express.Application = express();
+	setupMiddlewares(app);
+
+	setupRouter(app);
 
 	const PORT = process.env.PORT || 5000;
 	app.listen(PORT, () => {
-		console.log(`Server started successfully on port ${PORT}`);
+		logger.info(`Server started successfully on port ${PORT}`);
 	});
 };
 

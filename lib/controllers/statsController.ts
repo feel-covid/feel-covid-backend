@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import statsService from '../services/statsService';
 import { createStatPayloadValidator } from '../validators/createStatPayloadValidator';
 import { StatusCodeEnum } from '../@types/enums';
+import { logger } from '../services/loggingService';
 
 /**
  * @method POST
@@ -17,7 +18,10 @@ const handleAddStats = async (req: Request, res: Response) => {
 		await statsService.addStats(req.body);
 
 		res.send({ success: true });
-	} catch (ex) {}
+	} catch (ex) {
+		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
+		logger.error(`${ex.message} %o`, { body: req.body });
+	}
 };
 
 export default {

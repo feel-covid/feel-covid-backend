@@ -6,5 +6,5 @@
   "noSemi": false,
   "bracketSpacing": true,
   "arrowParens": "avoid",
-  "printWidth": 150
+  "printWidth": 85
 }
