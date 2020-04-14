@@ -5,9 +5,7 @@ if (process.env.NODE_ENV !== 'development') {
 	Sentry.init(sentryConfig);
 
 	process
-		.on('unhandledRejection', reason =>
-			Sentry.captureException(JSON.stringify(reason))
-		)
+		.on('unhandledRejection', reason => Sentry.captureException(reason))
 		.on('uncaughtException', ex => {
 			Sentry.captureException(ex);
 		});

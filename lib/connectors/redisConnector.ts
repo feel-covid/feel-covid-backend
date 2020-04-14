@@ -2,7 +2,8 @@ import * as Redis from 'ioredis';
 import { logger } from '../services/loggingService';
 
 export const redis = new Redis({
-	port: (process.env.REDIS_PORT as unknown) as number
+	host: process.env.REDIS_HOST,
+	port: process.env.REDIS_PORT as any
 });
 
 redis.on('connect', () => {

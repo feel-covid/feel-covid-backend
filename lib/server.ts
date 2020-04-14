@@ -19,7 +19,7 @@ const main = async () => {
 
 	setupRouter(app);
 
-	const PORT = process.env.PORT || 5000;
+	const PORT = process.env.NODE_PORT || 5000;
 	app.listen(PORT, () => {
 		logger.info(`Server started successfully on port ${PORT}`);
 	});

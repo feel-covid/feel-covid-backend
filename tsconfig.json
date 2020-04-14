@@ -10,8 +10,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "inlineSourceMap": true,
-    "sourceRoot": "/"
+    "sourceRoot": "/",
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist"]
 }
