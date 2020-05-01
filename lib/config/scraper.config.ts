@@ -1,4 +1,5 @@
 export const scraperConfig = {
-	dataSourceUrl: 'https://www.worldometers.info/coronavirus/country/israel/',
+	dataSourceUrl:
+		'https://raw.githubusercontent.com/idandrd/israel-covid19-data/master/IsraelCOVID19.csv',
 	cronSchedule: '0 */30 * * * *'
 };

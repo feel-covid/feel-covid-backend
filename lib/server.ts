@@ -1,3 +1,5 @@
+import scrapingService from './services/scrapingService';
+
 require('dotenv').config();
 import typeormConnector from './connectors/typeormConnector';
 import { setupRouter } from './routes';

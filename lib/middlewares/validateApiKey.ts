@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodeEnum } from '../@types/enums';
 
 export const validateApiKey = (req: Request, res: Response, next: NextFunction) => {
-	const secretHeader = req.headers['x-api-key'];
+	const apiKey = req.headers['x-api-key'];
 
-	if (!secretHeader || secretHeader !== process.env.API_KEY) {
+	if (!apiKey || apiKey !== process.env.API_KEY) {
 		/*
-		 * Returning 404 on purpose to obscure route
+		 * The middleware returns NOT_FOUND instead of UNAUTHORIZED to obscure the route.
 		 * */
-		res.status(StatusCodeEnum.NOT_FOUND).end();
+		res.sendStatus(StatusCodeEnum.NOT_FOUND);
 		return;
 	}
 

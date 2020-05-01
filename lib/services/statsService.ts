@@ -1,6 +1,7 @@
 import { Stat } from '../models/Stat';
 import { IStat } from '../@types/interfaces';
 import cachingService from './cachingService';
+import { CachingCategoriesEnum } from '../@types/enums';
 
 const addStats = async (payload: IStat) => {
 	const { date, ...rest } = payload;
@@ -9,8 +10,11 @@ const addStats = async (payload: IStat) => {
 		date: new Date(date * 1000),
 		...rest
 	});
+
 	await newStat.save();
-	await cachingService.clearAll();
+	await cachingService.clear(CachingCategoriesEnum.COUNTRIES_DATA);
+
+	return newStat;
 };
 
 export default {

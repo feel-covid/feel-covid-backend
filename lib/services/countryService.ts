@@ -2,8 +2,8 @@ import { ICountry } from '../@types/interfaces';
 import { Country } from '../models/Country';
 import { getConnection } from 'typeorm';
 import cachingService from './cachingService';
-import { CachingKeysEnum } from '../@types/enums';
-import { startOfDay, endOfDay } from 'date-fns';
+import { CachingCategoriesEnum } from '../@types/enums';
+import { endOfDay, startOfDay } from 'date-fns';
 
 const handleGetCountry = async payload => {
 	// tslint:disable-next-line:prefer-const
@@ -11,9 +11,12 @@ const handleGetCountry = async payload => {
 
 	const _startOfDay = startOfDay(new Date(JSON.parse(startDate))).toISOString();
 	const _endOfDay = endOfDay(new Date(JSON.parse(endDate))).toISOString();
-	const cacheKey = `${CachingKeysEnum.COUNTRIES_DATA}${_startOfDay}${_endOfDay}`;
+	const cacheKey = `${name}-${_startOfDay}-${_endOfDay}`;
 
-	let data = await cachingService.get(cacheKey);
+	let data = await cachingService.hget(
+		CachingCategoriesEnum.COUNTRIES_DATA,
+		cacheKey
+	);
 
 	if (!data) {
 		data = await getConnection()
@@ -22,11 +25,14 @@ const handleGetCountry = async payload => {
 			.select('*')
 			.innerJoin('country.stats', 'stat')
 			.where('country.name ILIKE :name', { name })
-			.andWhere('stat.date BETWEEN SYMMETRIC :startDate and :endDate', { startDate, endDate })
+			.andWhere('stat.date BETWEEN SYMMETRIC :startDate and :endDate', {
+				startDate,
+				endDate
+			})
 			.orderBy('stat.date')
 			.getRawMany();
 
-		await cachingService.set(cacheKey, data);
+		await cachingService.hset(CachingCategoriesEnum.COUNTRIES_DATA, cacheKey, data);
 	}
 
 	return data;

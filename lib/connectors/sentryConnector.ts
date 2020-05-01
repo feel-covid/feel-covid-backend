@@ -8,5 +8,6 @@ if (process.env.NODE_ENV !== 'development') {
 		.on('unhandledRejection', reason => Sentry.captureException(reason))
 		.on('uncaughtException', ex => {
 			Sentry.captureException(ex);
+			process.exit(1);
 		});
 }
