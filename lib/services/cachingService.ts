@@ -1,22 +1,35 @@
 import { redis } from '../connectors/redisConnector';
 import { CachingServiceGetValue, DynamicObject } from '../@types/types';
+import { stringify } from '../utils/stringify';
+import { CachingCategoriesEnum } from '../@types/enums';
+import { parse } from '../utils/parse';
 
-const set = async (key: string, payload: DynamicObject<any>) => {
-	return redis.set(key, JSON.stringify(payload));
+const set = async (key: string, payload: DynamicObject<any> | string) => {
+	return redis.set(key, stringify(payload));
+};
+
+const hset = async (
+	category: CachingCategoriesEnum,
+	key: string,
+	payload: DynamicObject<any | string>
+) => {
+	return redis.hset(category, key, stringify(payload));
+};
+
+const hget = async (
+	category: CachingCategoriesEnum,
+	key: string
+): Promise<CachingServiceGetValue> => {
+	const data = await redis.hget(category, key);
+	return parse(data);
 };
 
 const get = async (key: string): Promise<CachingServiceGetValue> => {
-	let data = await redis.get(key);
-
-	if (data) {
-		data = JSON.parse(data);
-		console.log(`Found cached data for key ${key}`);
-	}
-
-	return (data as unknown) as CachingServiceGetValue;
+	const data = await redis.get(key);
+	return parse(data);
 };
 
-const clear = async (key: string) => {
+const clear = async (key: string | CachingCategoriesEnum) => {
 	return redis.del(key);
 };
 
@@ -26,7 +39,9 @@ const clearAll = async () => {
 
 export default {
 	set,
+	hset,
 	get,
+	hget,
 	clear,
 	clearAll
 };

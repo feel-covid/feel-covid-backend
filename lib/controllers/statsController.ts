@@ -15,9 +15,9 @@ const handleAddStats = async (req: Request, res: Response) => {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		await statsService.addStats(req.body);
+		const data = await statsService.addStats(req.body);
 
-		res.send({ success: true });
+		res.send({ success: true, data });
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
 		logger.error(`${ex.message} %o`, { body: req.body });

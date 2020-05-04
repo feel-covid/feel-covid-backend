@@ -15,6 +15,6 @@ export enum ErrorMessagesEnum {
 	RATE_LIMIT_EXCEEDED = 'RATE_LIMIT_EXCEEDED'
 }
 
-export enum CachingKeysEnum {
+export enum CachingCategoriesEnum {
 	COUNTRIES_DATA = 'COUNTRIES_DATA'
 }
