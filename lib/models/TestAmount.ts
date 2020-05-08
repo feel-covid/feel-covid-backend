@@ -17,7 +17,7 @@ export class TestAmount extends BaseEntity {
 	@PrimaryColumn('uuid')
 	id: string;
 
-	@PrimaryColumn({ select: false })
+	@PrimaryColumn()
 	countryId: string;
 
 	@ManyToOne(
