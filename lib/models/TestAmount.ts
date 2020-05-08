@@ -1,10 +1,8 @@
-import { Stat } from './Stat';
 import {
 	Entity,
 	PrimaryColumn,
 	BaseEntity,
 	Column,
-	OneToMany,
 	BeforeInsert,
 	ManyToOne,
 	JoinColumn,
@@ -29,11 +27,14 @@ export class TestAmount extends BaseEntity {
 	@JoinColumn({ name: 'countryId' })
 	country: Country;
 
-	@Column('timestamptz')
-	date: Date;
+	@Column('date')
+	date: string;
 
 	@Column('integer')
 	amount: number;
+
+	@Column('double precision')
+	positive: number;
 
 	@BeforeInsert()
 	addId() {

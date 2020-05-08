@@ -24,3 +24,9 @@ export interface ICountry {
 	id?: string;
 	name: string;
 }
+
+export interface ITestAmount {
+	id?: string;
+	date: string;
+	amount: number;
+}

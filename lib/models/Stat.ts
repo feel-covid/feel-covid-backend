@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne, BaseEntity, Unique, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import {
+	Column,
+	Entity,
+	PrimaryColumn,
+	ManyToOne,
+	JoinColumn,
+	BaseEntity,
+	Unique,
+	BeforeInsert
+} from 'typeorm';
 import { Country } from './Country';
 import { ICondition, ITreatment } from '../@types/interfaces';
 import { v4 as uuidv4 } from 'uuid';

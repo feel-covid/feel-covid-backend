@@ -6,7 +6,6 @@ import * as express from 'express';
 import './connectors/redisConnector';
 import './connectors/sentryConnector';
 import { logger } from './services/loggingService';
-import scrapingService from './services/scrapingService';
 
 const initServerComponents = async () => {
 	await typeormConnector.init();
