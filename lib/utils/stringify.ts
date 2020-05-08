@@ -1,5 +1,5 @@
-import { isObject } from './isObject';
+import * as _ from 'lodash';
 
 export const stringify = (payload: any): string => {
-	return isObject(payload) ? JSON.stringify(payload) : (payload as string);
+	return _.isObject(payload) ? JSON.stringify(payload) : (payload as string);
 };

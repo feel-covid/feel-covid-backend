@@ -16,5 +16,6 @@ export enum ErrorMessagesEnum {
 }
 
 export enum CachingCategoriesEnum {
-	COUNTRIES_DATA = 'COUNTRIES_DATA'
+	COUNTRIES_DATA = 'COUNTRIES_DATA',
+	TESTS_AMOUNT = 'TESTS_AMOUNT'
 }

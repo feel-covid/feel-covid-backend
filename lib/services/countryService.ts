@@ -3,15 +3,19 @@ import { Country } from '../models/Country';
 import { getConnection } from 'typeorm';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
-import { endOfDay, startOfDay } from 'date-fns';
+import { excludeKeys } from '../utils/excludeKeys';
+import { TestAmount } from '../models/TestAmount';
+import { createCacheKeyFromDate } from '../utils/createCacheKeyFromDate';
 
-const handleGetCountry = async payload => {
+const handleGetCountryStats = async payload => {
 	// tslint:disable-next-line:prefer-const
 	let { name, startDate, endDate } = payload;
 
-	const _startOfDay = startOfDay(new Date(JSON.parse(startDate))).toISOString();
-	const _endOfDay = endOfDay(new Date(JSON.parse(endDate))).toISOString();
-	const cacheKey = `${name}-${_startOfDay}-${_endOfDay}`;
+	const cacheKey = createCacheKeyFromDate({
+		suffix: name,
+		firstDate: startDate,
+		secondDate: endDate
+	});
 
 	let data = await cachingService.hget(
 		CachingCategoriesEnum.COUNTRIES_DATA,
@@ -32,7 +36,52 @@ const handleGetCountry = async payload => {
 			.orderBy('stat.date')
 			.getRawMany();
 
+		data = excludeKeys(data, ['countryId', 'name', 'id']);
+
 		await cachingService.hset(CachingCategoriesEnum.COUNTRIES_DATA, cacheKey, data);
+	}
+
+	return data;
+};
+
+const handleGetCountryTests = async payload => {
+	const { name, startDate, endDate } = payload;
+
+	const cacheKey = createCacheKeyFromDate({
+		suffix: name,
+		firstDate: startDate,
+		secondDate: endDate
+	});
+
+	let data = await cachingService.hget(CachingCategoriesEnum.TESTS_AMOUNT, cacheKey);
+
+	if (!data) {
+		data = await getConnection()
+			.getRepository(Country)
+			.createQueryBuilder('country')
+			.select('*')
+			.innerJoin('country.tests', 'test_amount')
+			.where('country.name ILIKE :name', { name })
+			.andWhere('test_amount.date BETWEEN SYMMETRIC :startDate and :endDate', {
+				startDate,
+				endDate
+			})
+			.orderBy('test_amount.date')
+			.getRawMany();
+
+		const { total } = await getConnection()
+			.getRepository(TestAmount)
+			.createQueryBuilder('test_amount')
+			.select('SUM(amount) as total')
+			.where('test_amount.countryId = :id', { id: data?.[0]?.countryId })
+			.getRawOne();
+
+		data = {
+			total: Number(total),
+			data: excludeKeys(data, ['countryId', 'name', 'id'])
+		};
+
+		await cachingService.hset(CachingCategoriesEnum.TESTS_AMOUNT, cacheKey, data);
 	}
 
 	return data;
@@ -47,6 +96,7 @@ const handleAddCountry = async (payload: ICountry) => {
 };
 
 export default {
-	handleGetCountry,
-	handleAddCountry
+	handleGetCountryStats,
+	handleAddCountry,
+	handleGetCountryTests
 };
