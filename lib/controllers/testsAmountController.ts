@@ -1,21 +1,21 @@
 import { Request, Response } from 'express';
 import { StatusCodeEnum } from '../@types/enums';
 import { logger } from '../services/loggingService';
-import { createTestAmountPayloadValidator } from '../validators/createTestAmountPayloadValidator';
 import testsAmountService from '../services/testsAmountService';
+import { createOrUpdateTestAmountValidator } from '../validators/createOrUpdateTestAmountValidator';
 
 /**
- * @method POST
+ * @method PUT
  */
-const handleAddTestAmount = async (req: Request, res: Response) => {
+const handleCreateOrUpdateTestAmount = async (req: Request, res: Response) => {
 	try {
 		try {
-			await createTestAmountPayloadValidator.validateAsync(req.body);
+			await createOrUpdateTestAmountValidator.validateAsync(req.body);
 		} catch (ex) {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		await testsAmountService.addTestAmount(req.body);
+		await testsAmountService.createOrUpdateTestAmount(req.body);
 
 		res.send({ success: true });
 	} catch (ex) {
@@ -25,5 +25,5 @@ const handleAddTestAmount = async (req: Request, res: Response) => {
 };
 
 export default {
-	handleAddTestAmount
+	handleCreateOrUpdateTestAmount
 };

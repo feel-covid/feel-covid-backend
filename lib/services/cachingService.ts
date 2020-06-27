@@ -11,7 +11,7 @@ const set = async (key: string, payload: DynamicObject<any> | string) => {
 const hset = async (
 	category: CachingCategoriesEnum,
 	key: string,
-	payload: DynamicObject<any | string>
+	payload: DynamicObject<any | string> | string
 ) => {
 	return redis.hset(category, key, stringify(payload));
 };
