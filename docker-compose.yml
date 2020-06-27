@@ -8,6 +8,9 @@ services:
       - 5432:5432
     networks:
       - app-network
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
 
   pgadmin:
     image: dpage/pgadmin4

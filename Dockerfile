@@ -8,13 +8,9 @@ RUN npm install
 
 COPY . .
 
-RUN ls
-
 RUN npm run build
 
 WORKDIR ./dist
-
-RUN ls
 
 EXPOSE 5000
 

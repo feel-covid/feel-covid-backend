@@ -6,6 +6,7 @@ import { logger } from '../services/loggingService';
 
 /**
  * @method POST
+ * @route /stat
  */
 const handleAddStats = async (req: Request, res: Response) => {
 	try {

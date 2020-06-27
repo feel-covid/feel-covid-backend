@@ -26,7 +26,8 @@ export interface ICountry {
 }
 
 export interface ITestAmount {
-	id?: string;
+	countryId?: string;
 	date: string;
 	amount: number;
+	positive: number;
 }

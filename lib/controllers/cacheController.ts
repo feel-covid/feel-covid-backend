@@ -3,6 +3,10 @@ import cachingService from '../services/cachingService';
 import { StatusCodeEnum } from '../@types/enums';
 import { logger } from '../services/loggingService';
 
+/**
+ * @method POST
+ * @route /cache/clear
+ */
 export const handleClearCache = async (req: Request, res: Response) => {
 	try {
 		const { cacheKey = null } = req.body;

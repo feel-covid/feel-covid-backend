@@ -13,4 +13,5 @@ export const setupMiddlewares = (app: Application) => {
 	app.use(compression());
 	app.use(limiter);
 	app.post('*', validateApiKey);
+	app.put('*', validateApiKey)
 };

@@ -12,6 +12,7 @@ const addStats = async (payload: IStat) => {
 	});
 
 	await newStat.save();
+
 	await cachingService.clear(CachingCategoriesEnum.COUNTRIES_DATA);
 
 	return newStat;
