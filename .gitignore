@@ -37,4 +37,4 @@ lerna-debug.log*
 db
 .docker
 .env.prod
-docker-compose.prod.yml
+docker-compose-deploy.yml
