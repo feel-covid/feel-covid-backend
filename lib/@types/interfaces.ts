@@ -31,3 +31,11 @@ export interface ITestAmount {
 	amount: number;
 	positive: number;
 }
+
+export interface IDailyStat {
+	infected: number;
+	recovered: number;
+	deceased: number;
+	countryId?: string;
+	date: string;
+}
