@@ -87,6 +87,39 @@ const handleGetCountryTests = async payload => {
 	return data;
 };
 
+const handleGetCountryDailyStats = async payload => {
+	const { name, startDate, endDate } = payload;
+
+	const cacheKey = createCacheKeyFromDate({
+		suffix: name,
+		firstDate: startDate,
+		secondDate: endDate
+	});
+
+	let data = await cachingService.hget(CachingCategoriesEnum.DAILY_STATS, cacheKey);
+
+	if (!data) {
+		data = await getConnection()
+			.getRepository(Country)
+			.createQueryBuilder('country')
+			.select('*')
+			.innerJoin('country.dailyStats', 'daily_stats')
+			.where('country.name ILIKE :name', { name })
+			.andWhere('daily_stats.date BETWEEN SYMMETRIC :startDate and :endDate', {
+				startDate,
+				endDate
+			})
+			.orderBy('daily_stats.date')
+			.getRawMany();
+
+		data = excludeKeys(data, ['countryId', 'name', 'id']);
+
+		await cachingService.hset(CachingCategoriesEnum.DAILY_STATS, cacheKey, data);
+	}
+
+	return data;
+};
+
 const handleAddCountry = async (payload: ICountry) => {
 	const newCountry = Country.create({
 		name: payload.name
@@ -97,6 +130,7 @@ const handleAddCountry = async (payload: ICountry) => {
 
 export default {
 	handleGetCountryStats,
-	handleAddCountry,
-	handleGetCountryTests
+	handleGetCountryDailyStats,
+	handleGetCountryTests,
+	handleAddCountry
 };

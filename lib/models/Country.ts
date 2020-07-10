@@ -9,6 +9,7 @@ import {
 import { Stat } from './Stat';
 import { v4 as uuidv4 } from 'uuid';
 import { TestAmount } from './TestAmount';
+import { DailyStats } from './DailyStats';
 
 @Entity()
 export class Country extends BaseEntity {
@@ -29,6 +30,12 @@ export class Country extends BaseEntity {
 		testAmount => testAmount.country
 	)
 	tests: TestAmount[];
+
+	@OneToMany(
+		type => DailyStats,
+		dailyStats => dailyStats.country
+	)
+	dailyStats: DailyStats[];
 
 	@BeforeInsert()
 	addId() {

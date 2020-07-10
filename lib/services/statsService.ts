@@ -2,6 +2,7 @@ import { Stat } from '../models/Stat';
 import { IStat } from '../@types/interfaces';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
+import bus, { EventBus } from '../bus';
 
 const addStats = async (payload: IStat) => {
 	const { date, ...rest } = payload;
@@ -14,6 +15,8 @@ const addStats = async (payload: IStat) => {
 	await newStat.save();
 
 	await cachingService.clear(CachingCategoriesEnum.COUNTRIES_DATA);
+
+	bus.emit(EventBus.EVENTS.STAT_ADDED, newStat);
 
 	return newStat;
 };
