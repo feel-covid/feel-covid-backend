@@ -15,6 +15,8 @@ declare global {
 			REDIS_PORT: string;
 			REDIS_HOST: string;
 			SENTRY_DSN: string;
+			TELEGRAM_BOT_TOKEN: string;
+			TELEGRAM_CHANNEL_ID: string;
 		}
 
 		interface Global {

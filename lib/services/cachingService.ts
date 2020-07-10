@@ -16,16 +16,16 @@ const hset = async (
 	return redis.hset(category, key, stringify(payload));
 };
 
+const get = async (key: string): Promise<CachingServiceGetValue> => {
+	const data = await redis.get(key);
+	return parse(data);
+};
+
 const hget = async (
 	category: CachingCategoriesEnum,
 	key: string
 ): Promise<CachingServiceGetValue> => {
 	const data = await redis.hget(category, key);
-	return parse(data);
-};
-
-const get = async (key: string): Promise<CachingServiceGetValue> => {
-	const data = await redis.get(key);
 	return parse(data);
 };
 

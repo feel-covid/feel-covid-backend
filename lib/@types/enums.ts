@@ -1,9 +1,3 @@
-export enum ConditionEnum {
-	LIGHT = 'light',
-	MID = 'mid',
-	SEVERE = 'severe'
-}
-
 export enum StatusCodeEnum {
 	BAD_REQUEST = 400,
 	NOT_FOUND = 404,
@@ -11,11 +5,8 @@ export enum StatusCodeEnum {
 	INTERNAL_SERVER_ERROR = 500
 }
 
-export enum ErrorMessagesEnum {
-	RATE_LIMIT_EXCEEDED = 'RATE_LIMIT_EXCEEDED'
-}
-
 export enum CachingCategoriesEnum {
 	COUNTRIES_DATA = 'COUNTRIES_DATA',
-	TESTS_AMOUNT = 'TESTS_AMOUNT'
+	TESTS_AMOUNT = 'TESTS_AMOUNT',
+	DAILY_STATS = 'DAILY_STATS'
 }
