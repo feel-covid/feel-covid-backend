@@ -3,6 +3,7 @@ import { IStat } from '../@types/interfaces';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
 import bus, { EventBus } from '../bus';
+import { getConnection } from 'typeorm';
 
 const addStats = async (payload: IStat) => {
 	const { date, ...rest } = payload;
@@ -12,7 +13,16 @@ const addStats = async (payload: IStat) => {
 		...rest
 	});
 
-	await newStat.save();
+	await getConnection()
+		.createQueryBuilder()
+		.insert()
+		.into(Stat)
+		.values(newStat)
+		.orUpdate({
+			conflict_target: ['date'],
+			overwrite: ['mid', 'severe', 'deceased', 'recovered', 'treatment', 'light']
+		})
+		.execute();
 
 	await cachingService.clear(CachingCategoriesEnum.COUNTRIES_DATA);
 
