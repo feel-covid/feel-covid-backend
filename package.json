@@ -32,7 +32,7 @@
 		"lodash": "^4.17.15",
 		"node-cron": "^2.0.3",
 		"node-fetch": "^2.6.0",
-		"pg": "^7.18.2",
+		"pg": "8.0.3",
 		"pino": "^6.1.0",
 		"pino-sentry": "^0.2.5",
 		"pino-std-serializers": "^2.4.2",
