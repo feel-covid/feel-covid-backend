@@ -1,10 +1,10 @@
 import { Application, Router } from 'express';
-import statsRouter from './statsRouter';
+import statsRouter from './hourlyUpdateRouter';
 import { routerConfig } from '../config/router.config';
 import countryRouter from './countryRouter';
-import testsAmountRouter from './testsAmountRouter';
+import testsAmountRouter from './dailyTestsAmountRouter';
 import cacheRoutes from './cacheRoutes';
-import dailyStatsRouter from './dailyStatsRouter';
+import dailyStatsRouter from './dailyIRDRouter';
 
 export const setupRouter = (app: Application) => {
 	const router: Router = Router();

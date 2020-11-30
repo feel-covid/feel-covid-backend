@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import he from 'date-fns/locale/he';
-import { IStat } from '../../@types/interfaces';
-import { Stat } from '../../models/Stat';
+import { IHourlyUpdate } from '../../@types/interfaces';
+import { HourlyUpdate } from '../../models/HourlyUpdate';
 
 const _formatTime = (date: Date) => {
 	return format(date, 'HH:mm', {
@@ -30,7 +30,7 @@ const _getGreetingMessage = () => {
 	return greeting;
 };
 
-export const generateTemplate = (payload: Stat) => {
+export const generateTemplate = (payload: HourlyUpdate) => {
 	const { light, mid, severe, recovered, deceased, treatment } = payload;
 
 	const t = {

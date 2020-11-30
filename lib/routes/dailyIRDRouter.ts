@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import dailyStatsController from '../controllers/dailyStatsController';
+import dailyStatsController from '../controllers/dailyIRDController';
 
 const setRoutes = (router: Router) => {
 	router.put('/daily-stats', dailyStatsController.handleCreateOrUpdateDailyStats);

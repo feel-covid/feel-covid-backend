@@ -12,10 +12,8 @@ class TelegramConnector {
 				message
 			)}`;
 
-			const res = await fetch(URL);
-			console.log(await res.json());
+			await fetch(URL);
 		} catch (ex) {
-			console.log(ex);
 			logger.error(ex.message);
 		}
 	}

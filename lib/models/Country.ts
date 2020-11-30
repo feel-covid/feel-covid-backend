@@ -6,10 +6,10 @@ import {
 	BaseEntity,
 	BeforeInsert
 } from 'typeorm';
-import { Stat } from './Stat';
+import { HourlyUpdate } from './HourlyUpdate';
 import { v4 as uuidv4 } from 'uuid';
-import { TestAmount } from './TestAmount';
-import { DailyStats } from './DailyStats';
+import { DailyTestAmount } from './DailyTestAmount';
+import { DailyIRD } from './DailyIRD';
 
 @Entity()
 export class Country extends BaseEntity {
@@ -20,22 +20,22 @@ export class Country extends BaseEntity {
 	name: string;
 
 	@OneToMany(
-		type => Stat,
-		stat => stat.country
+		type => HourlyUpdate,
+		hourlyUpdate => hourlyUpdate.country
 	)
-	stats: Stat[];
+	hourlyUpdate: HourlyUpdate[];
 
 	@OneToMany(
-		type => TestAmount,
-		testAmount => testAmount.country
+		type => DailyTestAmount,
+		dailyTestAmount => dailyTestAmount.country
 	)
-	tests: TestAmount[];
+	dailyTestAmount: DailyTestAmount[];
 
 	@OneToMany(
-		type => DailyStats,
-		dailyStats => dailyStats.country
+		type => DailyIRD,
+		dailyIRD => dailyIRD.country
 	)
-	dailyStats: DailyStats[];
+	dailyIRD: DailyIRD[];
 
 	@BeforeInsert()
 	addId() {

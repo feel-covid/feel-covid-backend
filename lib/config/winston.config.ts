@@ -17,7 +17,7 @@ const winstonEnvConfigMapper = {
 	production: {
 		format: format.combine(format.splat()),
 		transports: [
-			// @ts-ignore
+			// @ts-expect-error
 			new Sentry({
 				config: {
 					dsn: process.env.SENTRY_DSN

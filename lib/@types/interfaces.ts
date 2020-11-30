@@ -10,7 +10,7 @@ export interface ITreatment {
 	undecided: number;
 }
 
-export interface IStat {
+export interface IHourlyUpdate {
 	light: ICondition;
 	mid: ICondition;
 	severe: ICondition;
@@ -25,14 +25,14 @@ export interface ICountry {
 	name: string;
 }
 
-export interface ITestAmount {
+export interface IDailyTestAmount {
 	countryId?: string;
 	date: string;
 	amount: number;
 	positive: number;
 }
 
-export interface IDailyStat {
+export interface IDailyIRD {
 	infected: number;
 	recovered: number;
 	deceased: number;

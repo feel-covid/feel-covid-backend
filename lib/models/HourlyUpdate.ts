@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 @Unique(['date'])
-export class Stat extends BaseEntity {
+export class HourlyUpdate extends BaseEntity {
 	@PrimaryColumn('uuid')
 	id: string;
 
@@ -23,7 +23,7 @@ export class Stat extends BaseEntity {
 
 	@ManyToOne(
 		type => Country,
-		country => country.stats
+		country => country.hourlyUpdate
 	)
 	@JoinColumn({ name: 'countryId' })
 	country: Country;

@@ -1,21 +1,21 @@
 import { Request, Response } from 'express';
 import { StatusCodeEnum } from '../@types/enums';
 import { logger } from '../services/loggingService';
-import { createOrUpdateDailyStatsValidator } from '../validators/createOrUpdateDailyStatsValidator';
-import dailyStatsService from '../services/dailyStatsService';
+import testsAmountService from '../services/dailyTestsAmountService';
+import { createOrUpdateTestAmountValidator } from '../validators/createOrUpdateTestAmountValidator';
 
 /**
  * @method PUT
  */
-const handleCreateOrUpdateDailyStats = async (req: Request, res: Response) => {
+const handleCreateOrUpdateTestAmount = async (req: Request, res: Response) => {
 	try {
 		try {
-			await createOrUpdateDailyStatsValidator.validateAsync(req.body);
+			await createOrUpdateTestAmountValidator.validateAsync(req.body);
 		} catch (ex) {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		await dailyStatsService.createOrUpdateDailyStats(req.body);
+		await testsAmountService.createOrUpdateTestAmount(req.body);
 
 		res.send({ success: true });
 	} catch (ex) {
@@ -25,5 +25,5 @@ const handleCreateOrUpdateDailyStats = async (req: Request, res: Response) => {
 };
 
 export default {
-	handleCreateOrUpdateDailyStats
+	handleCreateOrUpdateTestAmount
 };

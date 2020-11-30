@@ -1,14 +1,14 @@
 import { getConnection } from 'typeorm';
-import { TestAmount } from '../models/TestAmount';
+import { DailyTestAmount } from '../models/DailyTestAmount';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
-import { IDailyStat, ITestAmount } from '../@types/interfaces';
-import { DailyStats } from '../models/DailyStats';
+import { IDailyIRD, IDailyTestAmount } from '../@types/interfaces';
+import { DailyIRD } from '../models/DailyIRD';
 
 interface ICreateOrUpdateDailyStats {
 	data: {
 		countryId: string;
-		dailyStatsData: Array<IDailyStat>;
+		dailyStatsData: Array<IDailyIRD>;
 	};
 }
 
@@ -18,9 +18,9 @@ const createOrUpdateDailyStats = async (payload: ICreateOrUpdateDailyStats) => {
 	await getConnection()
 		.createQueryBuilder()
 		.insert()
-		.into(DailyStats)
+		.into(DailyIRD)
 		.values(
-			dailyStatsData.map(dailyStat => DailyStats.create({ ...dailyStat, countryId }))
+			dailyStatsData.map(dailyStat => DailyIRD.create({ ...dailyStat, countryId }))
 		)
 		.orUpdate({
 			conflict_target: ['date'],
