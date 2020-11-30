@@ -4,7 +4,7 @@ import { getConnection } from 'typeorm';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
 import { excludeKeys } from '../utils/excludeKeys';
-import { TestAmount } from '../models/TestAmount';
+import { DailyTestAmount } from '../models/DailyTestAmount';
 import { createCacheKeyFromDate } from '../utils/createCacheKeyFromDate';
 
 const handleGetCountryStats = async payload => {
@@ -27,13 +27,13 @@ const handleGetCountryStats = async payload => {
 			.getRepository(Country)
 			.createQueryBuilder('country')
 			.select('*')
-			.innerJoin('country.stats', 'stat')
+			.innerJoin('country.hourlyUpdate', 'hourly_update')
 			.where('country.name ILIKE :name', { name })
-			.andWhere('stat.date BETWEEN SYMMETRIC :startDate and :endDate', {
+			.andWhere('hourly_update.date BETWEEN SYMMETRIC :startDate and :endDate', {
 				startDate,
 				endDate
 			})
-			.orderBy('stat.date')
+			.orderBy('hourly_update.date')
 			.getRawMany();
 
 		data = excludeKeys(data, ['countryId', 'name', 'id']);
@@ -60,20 +60,20 @@ const handleGetCountryTests = async payload => {
 			.getRepository(Country)
 			.createQueryBuilder('country')
 			.select('*')
-			.innerJoin('country.tests', 'test_amount')
+			.innerJoin('country.dailyTestAmount', 'daily_test_amount')
 			.where('country.name ILIKE :name', { name })
-			.andWhere('test_amount.date BETWEEN SYMMETRIC :startDate and :endDate', {
+			.andWhere('daily_test_amount.date BETWEEN SYMMETRIC :startDate and :endDate', {
 				startDate,
 				endDate
 			})
-			.orderBy('test_amount.date')
+			.orderBy('daily_test_amount.date')
 			.getRawMany();
 
 		const { total } = await getConnection()
-			.getRepository(TestAmount)
-			.createQueryBuilder('test_amount')
+			.getRepository(DailyTestAmount)
+			.createQueryBuilder('daily_test_amount')
 			.select('SUM(amount) as total')
-			.where('test_amount.countryId = :id', { id: data?.[0]?.countryId })
+			.where('daily_test_amount.countryId = :id', { id: data?.[0]?.countryId })
 			.getRawOne();
 
 		data = {
@@ -103,13 +103,13 @@ const handleGetCountryDailyStats = async payload => {
 			.getRepository(Country)
 			.createQueryBuilder('country')
 			.select('*')
-			.innerJoin('country.dailyStats', 'daily_stats')
+			.innerJoin('country.dailyIRD', 'daily_ird')
 			.where('country.name ILIKE :name', { name })
-			.andWhere('daily_stats.date BETWEEN SYMMETRIC :startDate and :endDate', {
+			.andWhere('daily_ird.date BETWEEN SYMMETRIC :startDate and :endDate', {
 				startDate,
 				endDate
 			})
-			.orderBy('daily_stats.date')
+			.orderBy('daily_ird.date')
 			.getRawMany();
 
 		data = excludeKeys(data, ['countryId', 'name', 'id']);

@@ -1,19 +1,19 @@
 import {
-	Entity,
-	PrimaryColumn,
 	BaseEntity,
-	Column,
 	BeforeInsert,
-	ManyToOne,
+	Column,
+	Entity,
 	JoinColumn,
+	ManyToOne,
+	PrimaryColumn,
 	Unique
 } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 import { Country } from './Country';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 @Unique(['date'])
-export class TestAmount extends BaseEntity {
+export class DailyIRD extends BaseEntity {
 	@PrimaryColumn('uuid')
 	id: string;
 
@@ -22,7 +22,7 @@ export class TestAmount extends BaseEntity {
 
 	@ManyToOne(
 		type => Country,
-		country => country.stats
+		country => country.dailyIRD
 	)
 	@JoinColumn({ name: 'countryId' })
 	country: Country;
@@ -31,10 +31,13 @@ export class TestAmount extends BaseEntity {
 	date: string;
 
 	@Column('integer')
-	amount: number;
+	infected: number;
 
-	@Column('double precision')
-	positive: number;
+	@Column('integer')
+	recovered: number;
+
+	@Column('integer')
+	deceased: number;
 
 	@BeforeInsert()
 	addId() {

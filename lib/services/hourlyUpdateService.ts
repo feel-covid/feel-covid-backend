@@ -1,14 +1,14 @@
-import { Stat } from '../models/Stat';
-import { IStat } from '../@types/interfaces';
+import { HourlyUpdate } from '../models/HourlyUpdate';
+import { IHourlyUpdate } from '../@types/interfaces';
 import cachingService from './cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
 import bus, { EventBus } from '../bus';
 import { getConnection } from 'typeorm';
 
-const addStats = async (payload: IStat) => {
+const addStats = async (payload: IHourlyUpdate) => {
 	const { date, ...rest } = payload;
 
-	const newStat = Stat.create({
+	const newStat = HourlyUpdate.create({
 		date: new Date(date * 1000),
 		...rest
 	});
@@ -16,7 +16,7 @@ const addStats = async (payload: IStat) => {
 	await getConnection()
 		.createQueryBuilder()
 		.insert()
-		.into(Stat)
+		.into(HourlyUpdate)
 		.values(newStat)
 		.orUpdate({
 			conflict_target: ['date'],
