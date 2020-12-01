@@ -1,8 +1,8 @@
-import { HourlyUpdate } from '../models/HourlyUpdate';
-import { IHourlyUpdate } from '../@types/interfaces';
-import cachingService from './cachingService';
-import { CachingCategoriesEnum } from '../@types/enums';
-import bus, { EventBus } from '../bus';
+import { HourlyUpdate } from '../../models/HourlyUpdate';
+import { IHourlyUpdate } from '../../@types/interfaces';
+import cachingService from '../../services/cachingService';
+import { CachingCategoriesEnum } from '../../@types/enums';
+import bus, { EventBus } from '../../bus';
 import { getConnection } from 'typeorm';
 
 const addStats = async (payload: IHourlyUpdate) => {

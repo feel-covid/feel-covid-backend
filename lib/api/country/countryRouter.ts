@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import countryController from '../controllers/countryController';
+import countryController from './countryController';
 
 const setRoutes = (router: Router) => {
-	// tslint:disable:jsdoc-format\
-
 	router.get('/country/data', countryController.handleGetCountryData);
 	router.get('/country/stats', countryController.handleGetCountryStats);
 	router.get('/country/tests', countryController.handleGetCountryTests);

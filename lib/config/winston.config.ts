@@ -1,6 +1,5 @@
 import * as winston from 'winston';
 import * as Sentry from 'winston-sentry-log';
-import { prettyLoggerJSON } from '../utils/prettyLoggerJSON';
 const { format, transports } = winston;
 
 const winstonEnvConfigMapper = {
@@ -10,7 +9,12 @@ const winstonEnvConfigMapper = {
 			format.prettyPrint(),
 			format.splat(),
 			format.simple(),
-			prettyLoggerJSON
+			winston.format.printf(info => {
+				if (info.message.constructor === Object) {
+					info.message = JSON.stringify(info.message, null, 2);
+				}
+				return `${info.level}: ${info.message}`;
+			})
 		),
 		transports: [new transports.Console({})]
 	},

@@ -1,9 +1,9 @@
 import { getConnection } from 'typeorm';
-import { DailyTestAmount } from '../models/DailyTestAmount';
-import cachingService from './cachingService';
-import { CachingCategoriesEnum } from '../@types/enums';
-import { IDailyIRD, IDailyTestAmount } from '../@types/interfaces';
-import { DailyIRD } from '../models/DailyIRD';
+import { DailyTestAmount } from '../../models/DailyTestAmount';
+import cachingService from '../../services/cachingService';
+import { CachingCategoriesEnum } from '../../@types/enums';
+import { IDailyIRD, IDailyTestAmount } from '../../@types/interfaces';
+import { DailyIRD } from '../../models/DailyIRD';
 
 interface ICreateOrUpdateDailyStats {
 	data: {

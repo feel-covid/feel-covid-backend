@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { StatusCodeEnum } from '../@types/enums';
-import { logger } from '../services/loggingService';
-import testsAmountService from '../services/dailyTestsAmountService';
-import { createOrUpdateTestAmountValidator } from '../validators/createOrUpdateTestAmountValidator';
+import { StatusCodeEnum } from '../../@types/enums';
+import { logger } from '../../services/loggingService';
+import testsAmountService from './dailyTestsAmountService';
+import { createOrUpdateTestAmountValidator } from './validators/createOrUpdateTestAmountValidator';
 
 /**
  * @method PUT

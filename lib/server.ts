@@ -1,6 +1,6 @@
 require('dotenv').config();
 import typeormConnector from './connectors/typeormConnector';
-import { setupRouter } from './routes';
+import { setupRouter } from './api/setupRouter';
 import { setupMiddlewares } from './middlewares';
 import * as express from 'express';
 import './connectors/redisConnector';
