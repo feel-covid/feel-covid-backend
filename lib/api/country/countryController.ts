@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import countryService from '../services/countryService';
-import { createCountryPayloadValidator } from '../validators/createCountryPayloadValidator';
-import { StatusCodeEnum } from '../@types/enums';
-import { getCountryStatsPayloadValidator } from '../validators/getCountryStatsPayloadValidator';
-import { getCountryTestsPayloadValidator } from '../validators/getCountryTestsPayloadValidator';
-import { logger } from '../services/loggingService';
+import countryService from './countryService';
+import { createCountryPayloadValidator } from './validators/createCountryPayloadValidator';
+import { StatusCodeEnum } from '../../@types/enums';
+import { getCountryStatsPayloadValidator } from './validators/getCountryStatsPayloadValidator';
+import { getCountryTestsPayloadValidator } from './validators/getCountryTestsPayloadValidator';
+import { logger } from '../../services/loggingService';
 
 /**
  * @method GET

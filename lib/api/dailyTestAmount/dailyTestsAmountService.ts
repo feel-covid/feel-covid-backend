@@ -1,7 +1,7 @@
-import { DailyTestAmount } from '../models/DailyTestAmount';
-import cachingService from './cachingService';
-import { CachingCategoriesEnum } from '../@types/enums';
-import { IDailyTestAmount } from '../@types/interfaces';
+import { DailyTestAmount } from '../../models/DailyTestAmount';
+import cachingService from '../../services/cachingService';
+import { CachingCategoriesEnum } from '../../@types/enums';
+import { IDailyTestAmount } from '../../@types/interfaces';
 import { getConnection } from 'typeorm';
 
 interface ICreateAndUpdateTestAmountPayload {

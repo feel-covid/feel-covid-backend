@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import statsService from '../services/hourlyUpdateService';
-import { createStatPayloadValidator } from '../validators/createStatPayloadValidator';
-import { StatusCodeEnum } from '../@types/enums';
-import { logger } from '../services/loggingService';
+import statsService from './hourlyUpdateService';
+import { createStatPayloadValidator } from './validators/createStatPayloadValidator';
+import { StatusCodeEnum } from '../../@types/enums';
+import { logger } from '../../services/loggingService';
 
 /**
  * @method POST

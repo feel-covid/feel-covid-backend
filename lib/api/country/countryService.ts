@@ -1,13 +1,13 @@
-import { ICountry } from '../@types/interfaces';
-import { Country } from '../models/Country';
+import { ICountry } from '../../@types/interfaces';
+import { Country } from '../../models/Country';
 import { getConnection } from 'typeorm';
-import cachingService from './cachingService';
-import { CachingCategoriesEnum } from '../@types/enums';
-import { excludeKeys } from '../utils/excludeKeys';
-import { DailyTestAmount } from '../models/DailyTestAmount';
-import { createCacheKeyFromDate } from '../utils/createCacheKeyFromDate';
+import cachingService from '../../services/cachingService';
+import { CachingCategoriesEnum } from '../../@types/enums';
+import { excludeKeys } from '../../utils/excludeKeys';
+import { DailyTestAmount } from '../../models/DailyTestAmount';
+import { createCacheKeyFromDate } from '../../utils/createCacheKeyFromDate';
 
-const handleGetCountryStats = async payload => {
+const handleGetCountryHourlyUpdates = async payload => {
 	// tslint:disable-next-line:prefer-const
 	let { name, startDate, endDate } = payload;
 
@@ -87,7 +87,7 @@ const handleGetCountryTests = async payload => {
 	return data;
 };
 
-const handleGetCountryDailyStats = async payload => {
+const handleGetCountryDailyIRD = async payload => {
 	const { name, startDate, endDate } = payload;
 
 	const cacheKey = createCacheKeyFromDate({
@@ -129,8 +129,8 @@ const handleAddCountry = async (payload: ICountry) => {
 };
 
 export default {
-	handleGetCountryStats,
-	handleGetCountryDailyStats,
+	handleGetCountryStats: handleGetCountryHourlyUpdates,
+	handleGetCountryDailyStats: handleGetCountryDailyIRD,
 	handleGetCountryTests,
 	handleAddCountry
 };
