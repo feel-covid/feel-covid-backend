@@ -8,8 +8,7 @@ import { DailyTestAmount } from '../../models/DailyTestAmount';
 import { createCacheKeyFromDate } from '../../utils/createCacheKeyFromDate';
 
 const handleGetCountryHourlyUpdates = async payload => {
-	// tslint:disable-next-line:prefer-const
-	let { name, startDate, endDate } = payload;
+	const { name, startDate, endDate } = payload;
 
 	const cacheKey = createCacheKeyFromDate({
 		suffix: name,
@@ -18,7 +17,7 @@ const handleGetCountryHourlyUpdates = async payload => {
 	});
 
 	let data = await cachingService.hget(
-		CachingCategoriesEnum.COUNTRIES_DATA,
+		CachingCategoriesEnum.HOURLY_UPDATES,
 		cacheKey
 	);
 
@@ -38,7 +37,7 @@ const handleGetCountryHourlyUpdates = async payload => {
 
 		data = excludeKeys(data, ['countryId', 'name', 'id']);
 
-		await cachingService.hset(CachingCategoriesEnum.COUNTRIES_DATA, cacheKey, data);
+		await cachingService.hset(CachingCategoriesEnum.HOURLY_UPDATES, cacheKey, data);
 	}
 
 	return data;
@@ -53,7 +52,7 @@ const handleGetCountryTests = async payload => {
 		secondDate: endDate
 	});
 
-	let data = await cachingService.hget(CachingCategoriesEnum.TESTS_AMOUNT, cacheKey);
+	let data = await cachingService.hget(CachingCategoriesEnum.DAILY_TESTS_AMOUNT, cacheKey);
 
 	if (!data) {
 		data = await getConnection()
@@ -81,7 +80,7 @@ const handleGetCountryTests = async payload => {
 			data: excludeKeys(data, ['countryId', 'name', 'id'])
 		};
 
-		await cachingService.hset(CachingCategoriesEnum.TESTS_AMOUNT, cacheKey, data);
+		await cachingService.hset(CachingCategoriesEnum.DAILY_TESTS_AMOUNT, cacheKey, data);
 	}
 
 	return data;
@@ -96,7 +95,7 @@ const handleGetCountryDailyIRD = async payload => {
 		secondDate: endDate
 	});
 
-	let data = await cachingService.hget(CachingCategoriesEnum.DAILY_STATS, cacheKey);
+	let data = await cachingService.hget(CachingCategoriesEnum.DAILY_IRD, cacheKey);
 
 	if (!data) {
 		data = await getConnection()
@@ -114,7 +113,7 @@ const handleGetCountryDailyIRD = async payload => {
 
 		data = excludeKeys(data, ['countryId', 'name', 'id']);
 
-		await cachingService.hset(CachingCategoriesEnum.DAILY_STATS, cacheKey, data);
+		await cachingService.hset(CachingCategoriesEnum.DAILY_IRD, cacheKey, data);
 	}
 
 	return data;

@@ -24,7 +24,7 @@ const addStats = async (payload: IHourlyUpdate) => {
 		})
 		.execute();
 
-	await cachingService.clear(CachingCategoriesEnum.COUNTRIES_DATA);
+	await cachingService.clear(CachingCategoriesEnum.HOURLY_UPDATES);
 
 	bus.emit(EventBus.EVENTS.STAT_ADDED, newStat);
 
