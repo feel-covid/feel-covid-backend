@@ -12,8 +12,11 @@ const typeormConfig: ConnectionOptions = {
 	entities: [__dirname + '/../models/*.{js,ts}'],
 	synchronize: true,
 	logging: process.env.NODE_ENV === 'development',
+	ssl: process.env.NODE_ENV !== 'development',
 	extra: {
-		ssl: process.env.NODE_ENV !== 'development'
+		ssl: {
+			rejectUnauthorized: false
+		}
 	},
 	migrationsTableName: '__migrations__',
 	migrations: [path.resolve(__dirname + '/../migrations/*.{js,ts}')],
