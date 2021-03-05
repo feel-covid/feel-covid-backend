@@ -9,10 +9,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"preinstall": "node ./preInstallScript.js",
 		"start": "tsnd --respawn ./lib/server.ts",
-		"build": "tsc",
-		"migration:create": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:create -n --config lib/config/typeorm.config.ts",
-		"migration:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run --config lib/config/typeorm.config.ts",
-		"migration:revert": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:revert --config lib/config/typeorm.config.ts"
+		"build": "tsc"
 	},
 	"dependencies": {
 		"@hapi/joi": "^17.1.1",

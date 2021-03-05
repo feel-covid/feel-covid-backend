@@ -1,10 +1,9 @@
 import { createConnection } from 'typeorm';
-import * as typeormConfig from '../config/typeorm.config';
+import { typeormConfig } from '../config/typeorm.config';
 import { logger } from '../services/loggingService';
-import type { ConnectionOptions } from 'typeorm';
 
 const init = async () => {
-	await createConnection(typeormConfig as ConnectionOptions);
+	await createConnection(typeormConfig);
 	logger.info(`Connected to ${process.env.DATABASE_TYPE} successfully`);
 };
 

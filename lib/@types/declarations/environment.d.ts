@@ -6,7 +6,7 @@ declare global {
 			DATABASE_HOST: string;
 			DATABASE_USER: string;
 			DATABASE_PASSWORD: string;
-			DATABASE_TYPE: 'postgres';
+			DATABASE_TYPE: string;
 			DATABASE_PORT: string;
 			DATABASE_NAME: string;
 			NODE_PORT: string;
