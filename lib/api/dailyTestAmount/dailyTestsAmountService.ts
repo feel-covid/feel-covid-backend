@@ -24,7 +24,7 @@ const createOrUpdateTestAmount = async (
 		.orUpdate({ conflict_target: ['date'], overwrite: ['positive', 'amount'] })
 		.execute();
 
-	await cachingService.clear(CachingCategoriesEnum.TESTS_AMOUNT);
+	await cachingService.clear(CachingCategoriesEnum.DAILY_TESTS_AMOUNT);
 };
 
 export default {

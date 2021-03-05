@@ -14,4 +14,4 @@ WORKDIR ./dist
 
 EXPOSE 5000
 
-CMD ["node", "server.js"]
+CMD bash -c "npm run migration:run && node ./dist/server.js"

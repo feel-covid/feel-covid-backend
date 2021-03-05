@@ -28,7 +28,7 @@ const createOrUpdateDailyStats = async (payload: ICreateOrUpdateDailyStats) => {
 		})
 		.execute();
 
-	await cachingService.clear(CachingCategoriesEnum.DAILY_STATS);
+	await cachingService.clear(CachingCategoriesEnum.DAILY_IRD);
 };
 
 export default {
