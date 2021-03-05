@@ -10,8 +10,6 @@ COPY . .
 
 RUN npm run build
 
-WORKDIR ./dist
-
 EXPOSE 5000
 
 CMD bash -c "npm run migration:run && node ./dist/server.js"
