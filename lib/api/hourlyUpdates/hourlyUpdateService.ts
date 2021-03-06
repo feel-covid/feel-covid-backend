@@ -2,7 +2,6 @@ import { HourlyUpdate } from '../../models/HourlyUpdate';
 import { IHourlyUpdate } from '../../@types/interfaces';
 import cachingService from '../../services/cachingService';
 import { CachingCategoriesEnum } from '../../@types/enums';
-import bus, { EventBus } from '../../bus';
 import { getConnection } from 'typeorm';
 
 const addStats = async (payload: IHourlyUpdate) => {
@@ -25,8 +24,6 @@ const addStats = async (payload: IHourlyUpdate) => {
 		.execute();
 
 	await cachingService.clear(CachingCategoriesEnum.HOURLY_UPDATES);
-
-	bus.emit(EventBus.EVENTS.STAT_ADDED, newStat);
 
 	return newStat;
 };

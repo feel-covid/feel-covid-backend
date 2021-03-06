@@ -2,6 +2,15 @@ require('dotenv').config();
 import * as path from 'path';
 import type { ConnectionOptions } from 'typeorm';
 
+const sslConfig = {
+	ssl: true,
+	extra: {
+		ssl: {
+			rejectUnauthorized: false
+		}
+	}
+}
+
 const typeormConfig: ConnectionOptions = {
 	type: process.env.DATABASE_TYPE,
 	host: process.env.DATABASE_HOST,
@@ -12,18 +21,17 @@ const typeormConfig: ConnectionOptions = {
 	entities: [__dirname + '/../models/*.{js,ts}'],
 	synchronize: true,
 	logging: process.env.NODE_ENV === 'development',
-	ssl: process.env.NODE_ENV !== 'development',
-	extra: {
-		ssl: {
-			rejectUnauthorized: false
-		}
-	},
+
 	migrationsTableName: '__migrations__',
 	migrations: [path.resolve(__dirname + '/../migrations/*.{js,ts}')],
 	cli: {
 		migrationsDir: path.resolve(__dirname + '/../migrations')
 	}
 };
+
+if (process.env.NODE_ENV !== 'development') {
+	Object.assign(typeormConfig, sslConfig);
+}
 
 /*
  * TypeOrm's migration tool requires common-js export to properly read the configuration.
