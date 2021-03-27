@@ -17,7 +17,7 @@ export const handleClearCache = async (req: Request, res: Response) => {
 		res.json(operationResult);
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { body: req.body });
+		logger.error('Failed to clear cache', { ex });
 	}
 };
 

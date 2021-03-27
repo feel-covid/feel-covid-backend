@@ -19,9 +19,9 @@ const handleGetCountryData = async (req: Request, res: Response) => {
 		}
 
 		const handlers = [
-			countryService.handleGetCountryStats,
+			countryService.handleGetCountryHourlyUpdates,
 			countryService.handleGetCountryTests,
-			countryService.handleGetCountryDailyStats
+			countryService.handleGetCountryDailyIRD
 		];
 
 		const [hourlyUpdates, dailyTestAmount, dailyIRD] = await Promise.all(
@@ -38,7 +38,7 @@ const handleGetCountryData = async (req: Request, res: Response) => {
 		});
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { query: req.query });
+		logger.error('Failed to fetch country data', { ex, req });
 	}
 };
 
@@ -55,12 +55,12 @@ const handleGetCountryStats = async (req: Request, res: Response) => {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		const data = await countryService.handleGetCountryStats(req.query);
+		const data = await countryService.handleGetCountryHourlyUpdates(req.query);
 
 		res.send(data);
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { query: req.query });
+		logger.error('Failed to fetch hourly updates', { ex, req });
 	}
 };
 
@@ -82,7 +82,7 @@ const handleGetCountryTests = async (req: Request, res: Response) => {
 		res.send(data);
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { query: req.query });
+		logger.error('Failed to fetch daily test amount', { ex, req });
 	}
 };
 
@@ -103,7 +103,7 @@ const handleAddCountry = async (req: Request, res: Response) => {
 		res.send({ success: true });
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { body: req.body });
+		logger.error('Failed to add country', { ex, req });
 	}
 };
 

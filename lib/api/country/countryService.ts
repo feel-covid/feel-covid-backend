@@ -11,7 +11,7 @@ const handleGetCountryHourlyUpdates = async payload => {
 	const { name, startDate, endDate } = payload;
 
 	const cacheKey = createCacheKeyFromDate({
-		suffix: name,
+		prefix: name,
 		firstDate: startDate,
 		secondDate: endDate
 	});
@@ -47,12 +47,15 @@ const handleGetCountryTests = async payload => {
 	const { name, startDate, endDate } = payload;
 
 	const cacheKey = createCacheKeyFromDate({
-		suffix: name,
+		prefix: name,
 		firstDate: startDate,
 		secondDate: endDate
 	});
 
-	let data = await cachingService.hget(CachingCategoriesEnum.DAILY_TESTS_AMOUNT, cacheKey);
+	let data = await cachingService.hget(
+		CachingCategoriesEnum.DAILY_TESTS_AMOUNT,
+		cacheKey
+	);
 
 	if (!data) {
 		data = await getConnection()
@@ -80,7 +83,11 @@ const handleGetCountryTests = async payload => {
 			data: excludeKeys(data, ['countryId', 'name', 'id'])
 		};
 
-		await cachingService.hset(CachingCategoriesEnum.DAILY_TESTS_AMOUNT, cacheKey, data);
+		await cachingService.hset(
+			CachingCategoriesEnum.DAILY_TESTS_AMOUNT,
+			cacheKey,
+			data
+		);
 	}
 
 	return data;
@@ -90,7 +97,7 @@ const handleGetCountryDailyIRD = async payload => {
 	const { name, startDate, endDate } = payload;
 
 	const cacheKey = createCacheKeyFromDate({
-		suffix: name,
+		prefix: name,
 		firstDate: startDate,
 		secondDate: endDate
 	});
@@ -128,8 +135,8 @@ const handleAddCountry = async (payload: ICountry) => {
 };
 
 export default {
-	handleGetCountryStats: handleGetCountryHourlyUpdates,
-	handleGetCountryDailyStats: handleGetCountryDailyIRD,
+	handleGetCountryHourlyUpdates,
+	handleGetCountryDailyIRD,
 	handleGetCountryTests,
 	handleAddCountry
 };

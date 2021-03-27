@@ -21,7 +21,7 @@ const handleAddStats = async (req: Request, res: Response) => {
 		res.send({ success: true, data });
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { body: req.body });
+		logger.error('Failed to update or create hourly update', { ex, req });
 	}
 };
 

@@ -20,7 +20,7 @@ const handleCreateOrUpdateDailyStats = async (req: Request, res: Response) => {
 		res.send({ success: true });
 	} catch (ex) {
 		res.sendStatus(StatusCodeEnum.INTERNAL_SERVER_ERROR);
-		logger.error(`${ex.message} %o`, { body: req.body });
+		logger.error('Failed to update dailyIRD', { ex, req });
 	}
 };
 

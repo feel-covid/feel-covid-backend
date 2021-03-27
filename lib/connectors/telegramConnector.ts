@@ -14,7 +14,7 @@ class TelegramConnector {
 
 			await fetch(URL);
 		} catch (ex) {
-			logger.error(ex.message);
+			logger.error('Failed to send message', { ex });
 		}
 	}
 }

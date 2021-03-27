@@ -1,18 +1,18 @@
 import { startOfDay, endOfDay } from 'date-fns';
 
 interface IParams {
-	suffix: string;
+	prefix: string;
 	firstDate: string;
 	secondDate: string;
 }
 
 export const createCacheKeyFromDate = ({
-	suffix,
+	prefix,
 	firstDate,
 	secondDate
 }: IParams): string => {
 	const _startOfDay = startOfDay(new Date(JSON.parse(firstDate))).toISOString();
 	const _endOfDay = endOfDay(new Date(JSON.parse(secondDate))).toISOString();
 
-	return `${suffix}-${_startOfDay}-${_endOfDay}`;
+	return `${prefix}-${_startOfDay}-${_endOfDay}`;
 };
