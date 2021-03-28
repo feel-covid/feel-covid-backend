@@ -36,7 +36,7 @@ const createOrUpdateDailyVaccinations = async (
 		})
 		.execute();
 
-	await cachingService.clear(CachingCategoriesEnum.DAILY_TESTS_AMOUNT);
+	await cachingService.clear(CachingCategoriesEnum.DAILY_VACCINATIONS);
 };
 
 export default {
