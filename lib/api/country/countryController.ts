@@ -21,19 +21,24 @@ const handleGetCountryData = async (req: Request, res: Response) => {
 		const handlers = [
 			countryService.handleGetCountryHourlyUpdates,
 			countryService.handleGetCountryTests,
-			countryService.handleGetCountryDailyIRD
+			countryService.handleGetCountryDailyIRD,
+			countryService.handleGetCountryDailyVaccinations
 		];
 
-		const [hourlyUpdates, dailyTestAmount, dailyIRD] = await Promise.all(
-			handlers.map(service => service(req.query))
-		);
+		const [
+			hourlyUpdates,
+			dailyTestAmount,
+			dailyIRD,
+			dailyVaccinations
+		] = await Promise.all(handlers.map(service => service(req.query)));
 
 		res.send({
 			success: true,
 			data: {
 				hourlyUpdates,
 				dailyTestAmount,
-				dailyIRD
+				dailyIRD,
+				dailyVaccinations
 			}
 		});
 	} catch (ex) {

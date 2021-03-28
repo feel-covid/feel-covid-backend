@@ -10,6 +10,7 @@ import { HourlyUpdate } from './HourlyUpdate';
 import { v4 as uuidv4 } from 'uuid';
 import { DailyTestAmount } from './DailyTestAmount';
 import { DailyIRD } from './DailyIRD';
+import { DailyVaccination } from './DailyVaccination';
 
 @Entity()
 export class Country extends BaseEntity {
@@ -36,6 +37,12 @@ export class Country extends BaseEntity {
 		dailyIRD => dailyIRD.country
 	)
 	dailyIRD: DailyIRD[];
+
+	@OneToMany(
+		type => DailyVaccination,
+		dailyVaccination => dailyVaccination.country
+	)
+	dailyVaccination: DailyVaccination[];
 
 	@BeforeInsert()
 	addId() {

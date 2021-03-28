@@ -16,7 +16,8 @@
     "no-require-imports": [false],
     "no-var-requires": false,
     "no-console": false,
-    "array-type": false
+    "array-type": false,
+    "variable-name": false
   },
   "rulesDirectory": []
 }

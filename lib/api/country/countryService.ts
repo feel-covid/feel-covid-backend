@@ -126,6 +126,55 @@ const handleGetCountryDailyIRD = async payload => {
 	return data;
 };
 
+const handleGetCountryDailyVaccinations = async payload => {
+	const { name, startDate, endDate } = payload;
+
+	const cacheKey = createCacheKeyFromDate({
+		prefix: name,
+		firstDate: startDate,
+		secondDate: endDate
+	});
+
+	let data = await cachingService.hget(
+		CachingCategoriesEnum.DAILY_VACCINATIONS,
+		cacheKey
+	);
+
+	if (!data) {
+		data = await getConnection()
+			.getRepository(Country)
+			.createQueryBuilder('country')
+			.select([
+				'date',
+				'first_dose_amount as "firstDoseAmount"',
+				'first_dose_percentage as "firstDosePercentage"',
+				'first_dose_cumulative as "firstDoseCumulative"',
+				'second_dose_amount as "secondDoseAmount"',
+				'second_dose_percentage as "secondDosePercentage"',
+				'second_dose_cumulative as "secondDoseCumulative"'
+			])
+			.innerJoin('country.dailyVaccination', 'daily_vaccinations')
+			.where('country.name ILIKE :name', { name })
+			.andWhere(
+				'daily_vaccinations.date BETWEEN SYMMETRIC :startDate and :endDate',
+				{
+					startDate,
+					endDate
+				}
+			)
+			.orderBy('daily_vaccinations.date')
+			.getRawMany();
+
+		await cachingService.hset(
+			CachingCategoriesEnum.DAILY_VACCINATIONS,
+			cacheKey,
+			data
+		);
+	}
+
+	return data;
+};
+
 const handleAddCountry = async (payload: ICountry) => {
 	const newCountry = Country.create({
 		name: payload.name
@@ -138,5 +187,6 @@ export default {
 	handleGetCountryHourlyUpdates,
 	handleGetCountryDailyIRD,
 	handleGetCountryTests,
+	handleGetCountryDailyVaccinations,
 	handleAddCountry
 };
