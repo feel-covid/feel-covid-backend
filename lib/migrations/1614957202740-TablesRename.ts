@@ -7,5 +7,6 @@ export class TablesRename1614957202740 implements MigrationInterface {
 		await queryRunner.query(`ALTER TABLE daily_stats RENAME TO daily_ird`);
 	}
 
+	// tslint:disable-next-line:no-empty
 	public async down(queryRunner: QueryRunner): Promise<any> {}
 }
