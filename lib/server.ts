@@ -4,7 +4,7 @@ import './connectors/redisConnector';
 import './connectors/typeormConnector';
 import { setupRouter } from './api/setupRouter';
 import { setupMiddlewares } from './middlewares';
-import * as express from 'express';
+import express from 'express';
 import { logger } from './services/loggingService';
 
 const main = async () => {

@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 
 const conditionSchema = Joi.object({
 	cases: Joi.number().required(),

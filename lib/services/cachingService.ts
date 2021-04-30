@@ -1,22 +1,23 @@
 import { redis } from '../connectors/redisConnector';
-import { CachingServiceGetValue, DynamicObject } from '../@types/types';
 import { stringify } from '../utils/stringify';
 import { CachingCategoriesEnum } from '../@types/enums';
 import { parse } from '../utils/parse';
 
-const set = async (key: string, payload: DynamicObject<any> | string) => {
+type GetValue = Record<string, any> | Array<any> | null | string;
+
+const set = async (key: string, payload: Record<string, any> | string) => {
 	return redis.set(key, stringify(payload));
 };
 
 const hset = async (
 	category: CachingCategoriesEnum,
 	key: string,
-	payload: DynamicObject<any | string> | string
+	payload: Record<string, any> | string
 ) => {
 	return redis.hset(category, key, stringify(payload));
 };
 
-const get = async (key: string): Promise<CachingServiceGetValue> => {
+const get = async (key: string): Promise<GetValue> => {
 	const data = await redis.get(key);
 	return parse(data);
 };
@@ -24,7 +25,7 @@ const get = async (key: string): Promise<CachingServiceGetValue> => {
 const hget = async (
 	category: CachingCategoriesEnum,
 	key: string
-): Promise<CachingServiceGetValue> => {
+): Promise<GetValue> => {
 	const data = await redis.hget(category, key);
 	return parse(data);
 };

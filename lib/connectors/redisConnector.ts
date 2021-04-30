@@ -1,4 +1,4 @@
-import * as Redis from 'ioredis';
+import Redis from 'ioredis';
 import { logger } from '../services/loggingService';
 
 export const redis = new Redis({

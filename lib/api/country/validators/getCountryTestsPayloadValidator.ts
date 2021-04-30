@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 
 export const getCountryTestsPayloadValidator = Joi.object({
 	name: Joi.string().required(),

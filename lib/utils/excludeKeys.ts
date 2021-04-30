@@ -1,8 +1,7 @@
-import { DynamicObject } from '../@types/types';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export const excludeKeys = (
-	payload: Array<DynamicObject<any>> | DynamicObject<any>,
+	payload: Array<Record<string, any>> | Record<string, any>,
 	keys: Array<string>
 ) => {
 	if (Array.isArray(payload)) {

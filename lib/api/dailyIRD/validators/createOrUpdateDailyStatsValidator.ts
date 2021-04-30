@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 
 export const createOrUpdateDailyStatsValidator = Joi.object({
 	data: Joi.object({
