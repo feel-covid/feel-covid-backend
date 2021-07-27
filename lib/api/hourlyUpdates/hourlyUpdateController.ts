@@ -16,7 +16,7 @@ const handleAddStats = async (req: Request, res: Response) => {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		const data = await statsService.addStats(req.body);
+		const data = await statsService.createOrUpdateHourlyUpdate(req.body);
 
 		res.send({ success: true, data });
 	} catch (ex) {

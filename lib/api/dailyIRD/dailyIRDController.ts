@@ -15,7 +15,7 @@ const handleCreateOrUpdateDailyStats = async (req: Request, res: Response) => {
 			return res.status(StatusCodeEnum.BAD_REQUEST).send(ex.message);
 		}
 
-		await dailyStatsService.createOrUpdateDailyStats(req.body);
+		await dailyStatsService.createOrUpdateDailyIRD(req.body);
 
 		res.send({ success: true });
 	} catch (ex) {

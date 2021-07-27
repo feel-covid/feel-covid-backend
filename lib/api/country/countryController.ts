@@ -30,7 +30,9 @@ const handleGetCountryData = async (req: Request, res: Response) => {
 			dailyTestAmount,
 			dailyIRD,
 			dailyVaccinations
-		] = await Promise.all(handlers.map(service => service(req.query)));
+		] = await Promise.all(
+			handlers.map(service => service(req.query)) as Promise<any>[]
+		);
 
 		res.send({
 			success: true,
@@ -50,9 +52,8 @@ const handleGetCountryData = async (req: Request, res: Response) => {
 /**
  * @method GET
  * @route /country/stats
- * @deprecated
  */
-const handleGetCountryStats = async (req: Request, res: Response) => {
+const getCountryDailyIRD = async (req: Request, res: Response) => {
 	try {
 		try {
 			await getCountryStatsPayloadValidator.validateAsync(req.query);
@@ -72,9 +73,8 @@ const handleGetCountryStats = async (req: Request, res: Response) => {
 /**
  * @method GET
  * @route /country/tests
- * @deprecated
  */
-const handleGetCountryTests = async (req: Request, res: Response) => {
+const getCountryDailyTestAmount = async (req: Request, res: Response) => {
 	try {
 		try {
 			await getCountryTestsPayloadValidator.validateAsync(req.query);
@@ -113,8 +113,8 @@ const handleAddCountry = async (req: Request, res: Response) => {
 };
 
 export default {
-	handleGetCountryStats,
-	handleGetCountryTests,
+	getCountryDailyIRD,
+	getCountryDailyTestAmount,
 	handleAddCountry,
 	handleGetCountryData
 };

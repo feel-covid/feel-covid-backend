@@ -1,8 +1,5 @@
-import { DailyTestAmount } from '../../models/DailyTestAmount';
-import cachingService from '../../services/cachingService';
-import { CachingCategoriesEnum } from '../../@types/enums';
 import { IDailyTestAmount } from '../../@types/interfaces';
-import { getConnection } from 'typeorm';
+import { DailyTestAmountRepository } from '../../repositories/DailyTestAmountRepository';
 
 interface ICreateAndUpdateTestAmountPayload {
 	data: {
@@ -15,16 +12,7 @@ const createOrUpdateTestAmount = async (
 	payload: ICreateAndUpdateTestAmountPayload
 ) => {
 	const { countryId, testsData } = payload.data;
-
-	await getConnection()
-		.createQueryBuilder()
-		.insert()
-		.into(DailyTestAmount)
-		.values(testsData.map(testData => DailyTestAmount.create({ ...testData, countryId })))
-		.orUpdate({ conflict_target: ['date'], overwrite: ['positive', 'amount'] })
-		.execute();
-
-	await cachingService.clear(CachingCategoriesEnum.DAILY_TESTS_AMOUNT);
+	await DailyTestAmountRepository.createOrUpdateTestAmount(countryId, testsData);
 };
 
 export default {

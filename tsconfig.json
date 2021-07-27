@@ -1,4 +1,11 @@
 {
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true
+  },
+  "files": [
+    "lib/@types/declarations/global.d.ts"
+  ],
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'development') {
 		dsn: process.env.SENTRY_DSN,
 		integrations: [
 			new RewriteFrames({
+				// @ts-ignore
 				root: global.__rootdir__
 			})
 		]

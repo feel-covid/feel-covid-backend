@@ -3,8 +3,11 @@ import countryController from './countryController';
 
 const setRoutes = (router: Router) => {
 	router.get('/country/data', countryController.handleGetCountryData);
-	router.get('/country/stats', countryController.handleGetCountryStats);
-	router.get('/country/tests', countryController.handleGetCountryTests);
+	router.get('/country/daily-ird', countryController.getCountryDailyIRD);
+	router.get(
+		'/country/daily-test-amount',
+		countryController.getCountryDailyTestAmount
+	);
 	router.post('/country', countryController.handleAddCountry);
 };
 
