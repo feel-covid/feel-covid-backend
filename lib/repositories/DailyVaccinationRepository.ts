@@ -1,14 +1,14 @@
-import { getConnection } from 'typeorm';
 import { DailyVaccination, IDailyVaccination } from '../models/DailyVaccination';
 import cachingService from '../services/cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
+import connections from '../connections';
 
 export class DailyVaccinationRepository {
 	static async createOrUpdateDailyVaccinations(
 		countryId: string,
 		data: IDailyVaccination[]
 	) {
-		await getConnection()
+		await connections.database
 			.createQueryBuilder()
 			.insert()
 			.into(DailyVaccination)

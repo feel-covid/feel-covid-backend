@@ -1,8 +1,9 @@
 import { IHourlyUpdate } from '../@types/interfaces';
 import { HourlyUpdate } from '../models/HourlyUpdate';
-import { getConnection } from 'typeorm';
+
 import cachingService from '../services/cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
+import connections from '../connections';
 
 export class HourlyUpdateRepository {
 	static async createOrUpdateHourlyUpdate(
@@ -15,7 +16,7 @@ export class HourlyUpdateRepository {
 			...rest
 		});
 
-		await getConnection()
+		await connections.database
 			.createQueryBuilder()
 			.insert()
 			.into(HourlyUpdate)

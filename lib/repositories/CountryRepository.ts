@@ -1,13 +1,13 @@
 import { createCacheKeyFromDate } from '../utils/createCacheKeyFromDate';
 import cachingService from '../services/cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
-import { getConnection } from 'typeorm';
 import { Country } from '../models/Country';
 import { excludeKeys } from '../utils/excludeKeys';
 import { IDailyIRD, IDailyTestAmount, IHourlyUpdate } from '../@types/interfaces';
 import { DailyTestAmount } from '../models/DailyTestAmount';
 import { KeysToCamelCase } from '../@types/types';
 import { IDailyVaccination } from '../models/DailyVaccination';
+import connections from '../connections';
 
 export class CountryRepository {
 	static async getHourlyUpdates(
@@ -27,7 +27,7 @@ export class CountryRepository {
 		);
 
 		if (!data) {
-			data = await getConnection()
+			data = await connections.database
 				.getRepository(Country)
 				.createQueryBuilder('country')
 				.select('*')
@@ -69,7 +69,7 @@ export class CountryRepository {
 		);
 
 		if (!data) {
-			data = await getConnection()
+			data = await connections.database
 				.getRepository(Country)
 				.createQueryBuilder('country')
 				.select('*')
@@ -85,7 +85,7 @@ export class CountryRepository {
 				.orderBy('daily_test_amount.date')
 				.getRawMany();
 
-			const { total } = await getConnection()
+			const { total } = await connections.database
 				.getRepository(DailyTestAmount)
 				.createQueryBuilder('daily_test_amount')
 				.select('SUM(amount) as total')
@@ -120,7 +120,7 @@ export class CountryRepository {
 		let data = await cachingService.hget(CachingCategoriesEnum.DAILY_IRD, cacheKey);
 
 		if (!data) {
-			data = await getConnection()
+			data = await connections.database
 				.getRepository(Country)
 				.createQueryBuilder('country')
 				.select('*')
@@ -158,7 +158,7 @@ export class CountryRepository {
 		);
 
 		if (!data) {
-			data = await getConnection()
+			data = await connections.database
 				.getRepository(Country)
 				.createQueryBuilder('country')
 				.select([

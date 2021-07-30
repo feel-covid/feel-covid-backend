@@ -1,6 +1,6 @@
 import bunyan from 'bunyan';
 import bunyanDebugStream from 'bunyan-debug-stream';
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 
 const configEnvMapper = {
 	development: {

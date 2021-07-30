@@ -1,18 +1,16 @@
 import { IDailyIRD } from '../@types/interfaces';
-import { getConnection } from 'typeorm';
 import { DailyIRD } from '../models/DailyIRD';
 import cachingService from '../services/cachingService';
 import { CachingCategoriesEnum } from '../@types/enums';
+import connections from '../connections';
 
 export class DailyIRDRepository {
 	static async createOrUpdateDailyIRD(countryId: string, data: IDailyIRD[]) {
-		await getConnection()
+		await connections.database
 			.createQueryBuilder()
 			.insert()
 			.into(DailyIRD)
-			.values(
-				data.map(dailyIRD => DailyIRD.create({ ...dailyIRD, countryId }))
-			)
+			.values(data.map(dailyIRD => DailyIRD.create({ ...dailyIRD, countryId })))
 			.orUpdate({
 				conflict_target: ['date'],
 				overwrite: ['infected', 'recovered', 'deceased']
