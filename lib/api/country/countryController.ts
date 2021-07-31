@@ -53,7 +53,7 @@ const handleGetCountryData = async (req: Request, res: Response) => {
  * @method GET
  * @route /country/stats
  */
-const getCountryDailyIRD = async (req: Request, res: Response) => {
+const getCountryHourlyUpdates = async (req: Request, res: Response) => {
 	try {
 		try {
 			await getCountryStatsPayloadValidator.validateAsync(req.query);
@@ -113,7 +113,7 @@ const handleAddCountry = async (req: Request, res: Response) => {
 };
 
 export default {
-	getCountryDailyIRD,
+	getCountryHourlyUpdates,
 	getCountryDailyTestAmount,
 	handleAddCountry,
 	handleGetCountryData
