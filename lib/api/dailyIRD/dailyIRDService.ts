@@ -1,8 +1,5 @@
-import { getConnection } from 'typeorm';
-import cachingService from '../../services/cachingService';
-import { CachingCategoriesEnum } from '../../@types/enums';
 import { IDailyIRD } from '../../@types/interfaces';
-import { DailyIRD } from '../../models/DailyIRD';
+import { DailyIRDRepository } from '../../repositories/DailyIRDRepository';
 
 interface ICreateOrUpdateDailyStats {
 	data: {
@@ -11,25 +8,11 @@ interface ICreateOrUpdateDailyStats {
 	};
 }
 
-const createOrUpdateDailyStats = async (payload: ICreateOrUpdateDailyStats) => {
+const createOrUpdateDailyIRD = async (payload: ICreateOrUpdateDailyStats) => {
 	const { countryId, dailyStatsData } = payload.data;
-
-	await getConnection()
-		.createQueryBuilder()
-		.insert()
-		.into(DailyIRD)
-		.values(
-			dailyStatsData.map(dailyStat => DailyIRD.create({ ...dailyStat, countryId }))
-		)
-		.orUpdate({
-			conflict_target: ['date'],
-			overwrite: ['infected', 'recovered', 'deceased']
-		})
-		.execute();
-
-	await cachingService.clear(CachingCategoriesEnum.DAILY_IRD);
+	await DailyIRDRepository.createOrUpdateDailyIRD(countryId, dailyStatsData);
 };
 
 export default {
-	createOrUpdateDailyStats
+	createOrUpdateDailyIRD
 };
