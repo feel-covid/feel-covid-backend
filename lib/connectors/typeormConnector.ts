@@ -1,5 +1,5 @@
 import { Connection, createConnection } from 'typeorm';
-import { logger } from '../services/loggingService';
+import { logger } from '../logger';
 import type { ConnectionOptions } from 'typeorm';
 import { Connector } from './Connector';
 import * as connectionConfig from '../config/typeorm.config';

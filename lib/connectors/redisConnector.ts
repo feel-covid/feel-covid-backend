@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { logger } from '../services/loggingService';
+import { logger } from '../logger';
 import { Connector } from './Connector';
 
 export class RedisConnector implements Connector {
@@ -22,6 +22,5 @@ export class RedisConnector implements Connector {
 		});
 	}
 
-	// tslint:disable-next-line:no-empty
 	close() {}
 }

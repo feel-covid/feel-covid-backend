@@ -2,7 +2,7 @@ require('dotenv').config();
 import { setupRouter } from './api/setupRouter';
 import { setupMiddlewares } from './middlewares';
 import express from 'express';
-import { logger } from './services/loggingService';
+import { logger } from './logger';
 import { TypeormConnector } from './connectors/typeormConnector';
 import { SentryConnector } from './connectors/sentryConnector';
 import { RedisConnector } from './connectors/redisConnector';
@@ -11,6 +11,7 @@ import * as Sentry from '@sentry/node';
 import type { Connection } from 'typeorm';
 
 const main = async () => {
+	new SentryConnector().connect();
 	const redis = await new RedisConnector().connect();
 	const database = await new TypeormConnector().connect();
 	connections.setRedis(redis).setDatabase(database);
@@ -41,7 +42,6 @@ const attachExitListeners = (database: Connection) => {
 	};
 
 	if (process.env.NODE_ENV !== 'development') {
-		new SentryConnector().connect();
 		process
 			.on('unhandledRejection', reason => Sentry.captureException(reason))
 			.on('uncaughtException', async ex => {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import cachingService from '../../services/cachingService';
 import { StatusCodeEnum } from '../../@types/enums';
-import { logger } from '../../services/loggingService';
+import { logger } from '../../logger';
 
 /**
  * @method POST

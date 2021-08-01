@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodeEnum } from '../../@types/enums';
-import { logger } from '../../services/loggingService';
+import { logger } from '../../logger';
 import testsAmountService from './dailyTestsAmountService';
 import { createOrUpdateTestAmountValidator } from './validators/createOrUpdateTestAmountValidator';
 

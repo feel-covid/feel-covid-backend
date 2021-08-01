@@ -4,7 +4,7 @@ import { createCountryPayloadValidator } from './validators/createCountryPayload
 import { StatusCodeEnum } from '../../@types/enums';
 import { getCountryStatsPayloadValidator } from './validators/getCountryStatsPayloadValidator';
 import { getCountryTestsPayloadValidator } from './validators/getCountryTestsPayloadValidator';
-import { logger } from '../../services/loggingService';
+import { logger } from '../../logger';
 
 /**
  * @method GET

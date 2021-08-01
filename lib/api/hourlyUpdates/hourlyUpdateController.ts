@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import statsService from './hourlyUpdateService';
 import { createStatPayloadValidator } from './validators/createStatPayloadValidator';
 import { StatusCodeEnum } from '../../@types/enums';
-import { logger } from '../../services/loggingService';
+import { logger } from '../../logger';
 
 /**
  * @method POST

@@ -8,7 +8,6 @@ export class SentryConnector implements Connector {
 			dsn: process.env.SENTRY_DSN,
 			integrations: [
 				new RewriteFrames({
-					// @ts-ignore
 					root: global.__rootdir__
 				})
 			]
