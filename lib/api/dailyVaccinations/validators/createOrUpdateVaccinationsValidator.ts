@@ -12,7 +12,10 @@ export const createOrUpdateVaccinationsValidator = Joi.object({
 					first_dose_cumulative: Joi.number().required(),
 					second_dose_amount: Joi.number().required(),
 					second_dose_percentage: Joi.number().required(),
-					second_dose_cumulative: Joi.number().required()
+					second_dose_cumulative: Joi.number().required(),
+					third_dose_amount: Joi.number().required(),
+					third_dose_percentage: Joi.number().required(),
+					third_dose_cumulative: Joi.number().required()
 				})
 			)
 			.required()

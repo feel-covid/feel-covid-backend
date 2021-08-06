@@ -163,12 +163,12 @@ export class CountryRepository {
 				.createQueryBuilder('country')
 				.select([
 					'date',
-					'first_dose_amount as "firstDoseAmount"',
-					'first_dose_percentage as "firstDosePercentage"',
-					'first_dose_cumulative as "firstDoseCumulative"',
 					'second_dose_amount as "secondDoseAmount"',
 					'second_dose_percentage as "secondDosePercentage"',
-					'second_dose_cumulative as "secondDoseCumulative"'
+					'second_dose_cumulative as "secondDoseCumulative"',
+					'third_dose_amount as "thirdDoseAmount"',
+					'third_dose_percentage as "thirdDosePercentage"',
+					'third_dose_cumulative as "thirdDoseCumulative"'
 				])
 				.innerJoin('country.dailyVaccination', 'daily_vaccinations')
 				.where('country.name ILIKE :name', { name: countryName })

@@ -25,7 +25,10 @@ export class DailyVaccinationRepository {
 					'first_dose_cumulative',
 					'second_dose_amount',
 					'second_dose_percentage',
-					'second_dose_cumulative'
+					'second_dose_cumulative',
+					'third_dose_amount',
+					'third_dose_percentage',
+					'third_dose_cumulative'
 				]
 			})
 			.execute();

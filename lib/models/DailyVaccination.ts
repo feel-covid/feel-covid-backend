@@ -48,6 +48,15 @@ export class DailyVaccination extends BaseEntity {
 	@Column('integer')
 	second_dose_cumulative: number;
 
+	@Column('integer', { default: 0 })
+	third_dose_amount: number;
+
+	@Column('double precision', { default: 0 })
+	third_dose_percentage: number;
+
+	@Column('integer', { default: 0 })
+	third_dose_cumulative: number;
+
 	@BeforeInsert()
 	addId() {
 		this.id = uuidv4();
